@@ -1,3 +1,10 @@
+@font-face {
+    font-family: "bignoodletitling";
+    src: url(font/bignoodletitling.ttf);
+    font-weight: normal;
+    font-style: normal;
+}
+
 body {
     font-size: 14px;
     margin: 0;
@@ -16,14 +23,17 @@ body {
 }
 
 .logo > a > img {
-    margin-top: -2px;
+    margin-top: -18px;
     padding-right: 5px;
-    height: 70px;
+    height: 80px;
+    
 
 }
 
 .logo > a {
-    margin-top: 25px;
+    font-family: "bignoodletitling";
+    margin-top: 30px;
+    margin-bottom: 20px;
     display: flex;
     align-items: center;
     width: 100%;
@@ -45,16 +55,16 @@ body {
 }
 
 .hover:hover .custom_underline {
-    color: lightskyblue;
-    box-shadow: inset 0 -9px 0 #f8f6f6, inset 0 -11px 0 lightskyblue;
+    color: #05c301;
+    box-shadow: inset 0 -9px 0 #f8f6f6, inset 0 -11px 0 #05c301;
 }
 
 .hover:hover .undertext {
-    color: lightskyblue;
+    color: #05c301;
 }
 
 .undertext {
-    margin-left: 6px;
+    margin-left: 2px;
     margin-top: -8px;
     font-weight: normal;
     font-size: 10px;
@@ -65,15 +75,17 @@ body {
 
 
 .banner {
-    background: url(images/slider.jpg) rgb(28, 39, 46);
-    background-blend-mode: multiply, normal;
+    background: url(images/slider.jpg) #696969;
+    background-blend-mode: multiply, hard-light;
     min-height: 700px;
     width: 100%;
     text-align: center;
     background-size: cover;
     display: flex;
     align-items: center;
-    color: #d6d5d5
+    color: #d6d5d5;
+    font-family: "bignoodletitling";
+
 }
 
 .topheader {
@@ -97,3 +109,61 @@ body {
     font-family: 'Roboto' sans-serif;
 }
 
+h3 {
+    font-family: "bignoodletitling";
+    font-size: 35px;
+    color: #3d3d3d;
+    text-transform: uppercase;
+    margin-bottom: -8px;
+}
+
+.head_white_content>span {
+    margin-top: -10px;
+    width: 75px;
+    height: 2px;
+    background: #05c301;
+    display: inline-block;
+}
+
+.head_white_content {
+    padding: 5%;
+    text-align: center;
+    width: 100%;
+}
+
+.head_white_content>p {
+    margin-top: -8px;
+    padding: 20px 90px 0px;
+    color: #696969
+}
+
+.advantage > .lnr {
+    font-size: 57px;
+    font-weight: 50px;
+    color: #05c301;
+}
+
+.advantage > h5 {
+    margin-top: 20px;
+    margin-bottom: 0px;
+    font-family: "bignoodletitling" ;
+}
+
+.advantage {
+    text-align: center;
+    background-color: #ebebeb;
+    margin: 10px;
+    height: 196px;
+    padding: 30px;
+}
+
+.advantage > .line {
+    width: 100px;
+    height: 2px;
+    background: #05c301;
+    display: inline-block;
+}
+
+.advantage > p {
+    margin-top: 10px;
+}

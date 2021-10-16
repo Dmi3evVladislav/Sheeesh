@@ -73,11 +73,25 @@
 .bx-wrapper .bx-prev {
 	left: -70px;
 	background: url(../images/left.png) no-repeat;
+	opacity: .3;
 }
 
 .bx-wrapper .bx-next {
 	right: -70px;
 	background: url(../images/right.png) no-repeat;
+	opacity: .3;
+}
+
+.bx-wrapper .bx-prev:hover {
+	left: -70px;
+	background: url(../images/left.png) no-repeat ;
+	opacity: 100%;
+}
+
+.bx-wrapper .bx-next:hover {
+	right: -70px;
+	background: url(../images/right.png) no-repeat;
+	opacity: 100%;
 }
 
 .bx-wrapper .bx-controls-direction a {

@@ -6,6 +6,8 @@ $(document).ready(function () {
        easing: 'ease-out',
        mode: 'horizontal',
        auto: true,
-       pause: 3000
+       pause: 3000,
+       autoHover: true,
+       stopAutoOnClick: true,
     });
 });
