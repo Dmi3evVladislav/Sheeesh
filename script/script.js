@@ -1,5 +1,5 @@
 $(document).ready(function () {
     $(".bxslider").bxSlider({
-       pager: false  //точечки снизу
+       pager: true, //точечки снизу
     });
 });

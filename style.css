@@ -65,7 +65,7 @@ body {
 
 
 .banner {
-    background: url(images/slider.jpg) lightskyblue;
+    background: url(images/slider.jpg) rgb(28, 39, 46);
     background-blend-mode: multiply, normal;
     min-height: 700px;
     width: 100%;
@@ -96,3 +96,4 @@ body {
     color: white;
     font-family: 'Roboto' sans-serif;
 }
+
