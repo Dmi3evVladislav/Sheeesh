@@ -167,3 +167,50 @@ h3 {
 .advantage > p {
     margin-top: 10px;
 }
+
+.features {
+    background: #171f23;
+    text-align: center;
+    color: #f3e7e6;
+    padding: 60px 0;
+    display: block;
+}
+
+.head_black_content > h3 {
+    text-transform: uppercase;
+    color: #f3e7e6;
+    font-size: 25px;
+
+}
+
+.head_black_content {
+    text-align: center;
+    padding: 20px;
+}
+
+.head_black_content > span {
+    width: 120px;
+    height: 2px;
+    background: #4f4343;
+    display: inline-block;
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+
+.aboutus {
+    margin-bottom: 100px;
+}
+
+.features .lnr {
+    font-size: 56px;
+    color: #05c301;
+}
+
+.features p {
+    margin-top: 27px;
+    font-size: 14px;
+}
+
+.features h5 {
+    font-size: 35px;
+}
