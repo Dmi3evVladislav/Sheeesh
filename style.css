@@ -214,3 +214,18 @@ h3 {
 .features h5 {
     font-size: 35px;
 }
+
+.plan {
+    background-color: #171f23;
+}
+
+.price{
+    height: 128px;
+    background-color: #0e1316
+}
+
+.desc{
+    height: 322px;
+    background-color: #1f282c;
+    margin-bottom: 94px;
+}
