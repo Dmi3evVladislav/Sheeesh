@@ -278,3 +278,34 @@ h3 {
     color: #99fc7a;
 }
 
+.sinner1 {
+    background-color: #ebebeb;
+    padding: 71px 90px 80px;
+    text-align: center;
+    min-height: 435px;
+}
+
+.sinner1 a img {
+    width: 20%;
+    min-width: 20px;
+    max-width: 55px;
+}
+
+.sinner1 h4 {
+    margin-top: 10px;
+    font-size: 20px;
+}
+
+.sinner2 {
+    min-height: 435px;
+    background-color: #ebebeb;
+    padding: 100px 90px 80px;
+    text-align: left;
+}
+
+.team .bx-wrapper .bx-pager, .bx-wrapper .bx-controls-auto {
+    position: absolute;
+    bottom: 50px;
+    width: 100%;
+    left: -34%
+}

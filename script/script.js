@@ -38,7 +38,16 @@ $(document).ready(function () {
 });
 
 $(document).ready(function () {
-    console.log('Сайт загружен и готов к работе');
+    $(".bxslider_team").bxSlider({
+        controls: false
+    })
+    let pagersteam = $(".bx-pager")
+    $(".pagers").append(pagersteam)
 });
 
+
+
+$(document).ready(function () {
+    console.log('Сайт загружен и готов к работе');
+});
 
