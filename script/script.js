@@ -37,6 +37,8 @@ $(document).ready(function () {
     });
 });
 
+
+
 $(document).ready(function () {
     $(".bxslider_team").bxSlider({
         controls: false
@@ -52,4 +54,14 @@ $(document).ready(function () {
 });
 
 let photpercent2 = $(".photperc2").text()
-console.log(photpercent2)
+
+
+$(".photoshop2").css({
+    'width': function(photoshop2){
+        return `${photpercent2*5}px`
+    }
+})
+
+$('.linecen5').css({
+    'width' : '25px'
+})

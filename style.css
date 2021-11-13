@@ -310,3 +310,14 @@ h3 {
     left: -34%
 }
 
+.linecen5, .linecen6, .linecen7, .linecen8{
+    height: 2px;
+    background: #3d3d3d;
+    display: inline-block;
+}
+
+.photoshop2, .illustr2, .sketch2, .after2{
+    height: 2px;
+    background: #05c301;
+    display: inline-block;
+}
