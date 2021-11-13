@@ -51,3 +51,5 @@ $(document).ready(function () {
     console.log('Сайт загружен и готов к работе');
 });
 
+let photpercent2 = $(".photperc2").text()
+console.log(photpercent2)
