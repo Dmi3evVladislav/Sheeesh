@@ -310,14 +310,53 @@ h3 {
     left: -34%
 }
 
-.linecen5, .linecen6, .linecen7, .linecen8{
+.linecen{
     height: 2px;
     background: #3d3d3d;
     display: inline-block;
+    position: relative;
+    width: 100%
 }
 
-.photoshop2, .illustr2, .sketch2, .after2{
+.ph {
+    display: flex;
+}
+
+.ilustr2{
     height: 2px;
     background: #05c301;
     display: inline-block;
+    position: absolute;
 }
+
+.sketch2{
+    height: 2px;
+    background: #05c301;
+    display: inline-block;
+    position: absolute;
+}
+
+.afteff2{
+    height: 2px;
+    background: #05c301;
+    display: inline-block;
+    position: absolute;
+}
+
+.photoshop2{
+    height: 2px;
+    background: #05c301;
+    display: inline-block;
+    position: absolute;
+}
+
+.slides {
+    display: flex;
+    align-items: center;
+}
+
+.innerwidth {
+    width: 70%;
+    margin: 0 auto;
+}
+

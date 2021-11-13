@@ -35,6 +35,14 @@ $(document).ready(function () {
         preventDefaultSwipeX: true,
         preventDefaultSwipeY: true,    
     });
+
+    $('.flexslider').flexslider({
+        animation: 'slide',
+        animationloop: false,
+        itemWidth: 200,
+        itemMargin: 25,
+        touch: true
+    })
 });
 
 
@@ -53,15 +61,26 @@ $(document).ready(function () {
     console.log('Сайт загружен и готов к работе');
 });
 
-let photpercent2 = $(".photperc2").text()
-
+let photoshop2 = $(".photperc2").text();
 
 $(".photoshop2").css({
-    'width': function(photoshop2){
-        return `${photpercent2*5}px`
-    }
+    'width': photoshop2,
 })
 
-$('.linecen5').css({
-    'width' : '25px'
+let illustr2 = $(".ilustrperc2").text();
+
+$(".illustr2").css({
+    'width': illustr2,
+})
+
+let sketch2 = $(".sketchperc2").text();
+
+$(".sketch2").css({
+    'width': sketch2,
+})
+
+let photoshop2 = $(".photperc2").text();
+
+$(".photoshop2").css({
+    'width': photoshop2,
 })
