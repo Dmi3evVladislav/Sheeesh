@@ -304,10 +304,12 @@ h3 {
 }
 
 .team .bx-wrapper .bx-pager, .bx-wrapper .bx-controls-auto {
-    position: absolute;
-    bottom: 50px;
-    width: 100%;
-    left: -34%
+    margin-top: -20px;
+    position: relative;
+}
+
+.team {
+    margin-bottom: 100px;
 }
 
 .linecen{
@@ -315,11 +317,17 @@ h3 {
     background: #3d3d3d;
     display: inline-block;
     position: relative;
-    width: 100%
+    width: 80%
 }
 
 .ph {
     display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
+.partners {
+    background-color: #171f23;
 }
 
 .ilustr2{
@@ -350,6 +358,10 @@ h3 {
     position: absolute;
 }
 
+.flexslider {
+    margin-bottom: 40px;
+}
+
 .slides {
     display: flex;
     align-items: center;
@@ -360,3 +372,74 @@ h3 {
     margin: 0 auto;
 }
 
+
+.textinput {
+    margin: 40px 0;
+}
+
+.textinput p, .textmsg p {
+    font-weight: 700;
+    color: #696969;
+    margin-bottom: 5px;
+}
+
+.textinput p span, .textmsg p span {
+    color: #05c301;
+    margin-left: 5px;
+}
+
+.textinput input{
+    border: 0;
+    border-bottom: 1px solid #cacaca;
+    width: 90%;
+    height: 40px;
+    outline: 0;
+    transition: 0.7s;
+}
+
+.textmsg textarea{
+    border: 0;
+    border-bottom: 1px solid #cacaca;
+    width: 95%;
+    height: 80px;
+    outline: 0;
+    padding-top: 10px;
+    transition: 0.7s;
+}
+
+.contact form {
+    width: 70%;
+    margin: 0 auto;
+}
+
+.submit {
+    width: 205px;
+    height: 50px;
+    letter-spacing: 1px;
+    background: #05c301;
+    border: 1px solid #05c301;
+    color: #fff;
+    display: block;
+    margin: 50px auto 0;
+    font-weight: 700;
+    text-transform: uppercase;
+    transition: 0.7s;
+}
+
+.submit:hover {
+    color: rgb(5, 195, 1);
+    transition: 0.5s;
+    background: white;
+}
+
+.textinput input:focus, .textmsg textarea:focus {
+    box-shadow: 0px 1px 3px 4px rgba(5, 195, 1, 0.5);
+    transition: 0.4s;
+}
+
+.textmsg .comment {
+    margin-top: 20px;
+    font-weight: 300;
+    color: #696969;
+    margin-bottom: 20px;
+}

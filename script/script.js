@@ -1,15 +1,8 @@
-document.body.style.display = "none"
-
-$(document).ready(function () {
-    document.body.style.display = ""
-});
-
-
-
 $(document).ready(function () {
     if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phone|Kindle|Silk|Opera Mini/i.test(navigator.userAgent)) {
     $(".bxslider").bxSlider({
-        controls: false,
+        startSlide: 0,
+        controls: true,
         pager: true, //точечки снизу
         speed: 500,
         easing: 'ease-out',
@@ -19,11 +12,20 @@ $(document).ready(function () {
         autoHover: true,
         stopAutoOnClick: true,
         preventDefaultSwipeX: true,
-        preventDefaultSwipeY: true, 
-    })
+        preventDefaultSwipeY: true,  
+    });
+
+    $('.flexslider').flexslider({
+        animation: 'slide',
+        animationloop: false,
+        itemWidth: 200,
+        itemMargin: 25,
+        touch: true,
+    });
+
     } else $(".bxslider").bxSlider({
+        startSlide: 0,
         controls: true,
-        infiniteLoop: true,
         pager: true, //точечки снизу
         speed: 500,
         easing: 'ease-out',
@@ -41,7 +43,7 @@ $(document).ready(function () {
         animationloop: false,
         itemWidth: 200,
         itemMargin: 25,
-        touch: true
+        touch: false,
     })
 });
 
@@ -69,7 +71,7 @@ $(".photoshop2").css({
 
 let illustr2 = $(".ilustrperc2").text();
 
-$(".illustr2").css({
+$(".ilustr2").css({
     'width': illustr2,
 })
 
@@ -79,8 +81,8 @@ $(".sketch2").css({
     'width': sketch2,
 })
 
-let photoshop2 = $(".photperc2").text();
+let af2 = $(".afteffperc2").text();
 
-$(".photoshop2").css({
-    'width': photoshop2,
+$(".afteff2").css({
+    'width': af2,
 })
