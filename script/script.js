@@ -17,10 +17,12 @@ $(document).ready(function () {
 
     $('.flexslider').flexslider({
         animation: 'slide',
+        directionNav: false,
         animationloop: false,
         itemWidth: 200,
         itemMargin: 25,
         touch: true,
+
     });
 
     } else $(".bxslider").bxSlider({
@@ -40,6 +42,7 @@ $(document).ready(function () {
 
     $('.flexslider').flexslider({
         animation: 'slide',
+        directionNav: true,
         animationloop: false,
         itemWidth: 200,
         itemMargin: 25,
