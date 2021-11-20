@@ -47,23 +47,11 @@ $(document).ready(function () {
         itemWidth: 200,
         itemMargin: 25,
         touch: false,
-    })
-});
+    });
 
-
-
-$(document).ready(function () {
     $(".bxslider_team").bxSlider({
         controls: false
-    })
-    let pagersteam = $(".bx-pager")
-    $(".pagers").append(pagersteam)
-});
-
-
-
-$(document).ready(function () {
-    console.log('Сайт загружен и готов к работе');
+    });
 });
 
 let photoshop2 = $(".photperc2").text();
