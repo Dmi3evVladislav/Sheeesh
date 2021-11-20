@@ -433,7 +433,7 @@ h3 {
 }
 
 .textinput input:focus, .textmsg textarea:focus {
-    box-shadow: 0px 1px 3px 4px rgba(5, 195, 1, 0.5);
+    border-bottom: 1px solid #05c301;
     transition: 0.4s;
 }
 
@@ -442,4 +442,50 @@ h3 {
     font-weight: 300;
     color: #696969;
     margin-bottom: 20px;
+}
+
+.map {
+    background-color: #1f282c;
+    
+}
+
+.title_map {
+    padding-top: 27px;
+    padding-bottom: 27px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.map span {
+    margin-left: 10px;
+    font-weight: 700;
+    color: #05c301;
+    font-size: 24px;
+}
+
+.accordion-open span::before {
+    font-family: 'Linearicons-Free';
+    content: "\e873";
+}
+
+.accordion-close span::before {
+    font-family: 'Linearicons-Free';
+    content: "\e874";
+}
+
+.underflour{
+    background-color:#0e1316;
+}
+
+.underflour img {
+    height: 80px;
+}
+
+.underflour p{
+    margin-top: 10px;
+}
+
+.underflour a{
+    filter: invert(1);
 }

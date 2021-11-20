@@ -52,6 +52,10 @@ $(document).ready(function () {
     $(".bxslider_team").bxSlider({
         controls: false
     });
+
+    $('.accordion').accordion({
+        defaultOpen:""
+    })
 });
 
 let photoshop2 = $(".photperc2").text();
