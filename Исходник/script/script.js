@@ -24,11 +24,8 @@ $(document).ready(function () {
         touch: true,
 
     });
-    $('.Desktop').css({
-      'display': 'none'
-    })
 
-    } else { $(".bxslider").bxSlider({
+    } else $(".bxslider").bxSlider({
         startSlide: 0,
         controls: true,
         pager: true, //точечки снизу
@@ -41,26 +38,24 @@ $(document).ready(function () {
         stopAutoOnClick: true,
         preventDefaultSwipeX: true,
         preventDefaultSwipeY: true,    
-      });
+    });
 
-      $('.flexslider').flexslider({
+    $('.flexslider').flexslider({
         animation: 'slide',
         directionNav: true,
         animationloop: false,
         itemWidth: 200,
         itemMargin: 25,
         touch: false,
-      });
-      $('.noDesktop').css({
-        'display': 'none'
-      });
-    };
-    $('.accordion').accordion({
-        defaultOpen:""
     });
+
     $(".bxslider_team").bxSlider({
         controls: false
     });
+
+    $('.accordion').accordion({
+        defaultOpen:""
+    })
 });
 
 let photoshop2 = $(".photperc2").text();
