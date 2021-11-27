@@ -195,7 +195,7 @@ h3 {
 .head_black_content > span {
     width: 120px;
     height: 2px;
-    background: #4f4343;
+    background: #05c301;
     display: inline-block;
     margin-top: 20px;
     margin-bottom: 30px;
@@ -527,4 +527,88 @@ h3 {
 .pricemb {
   text-align: right;
   width: 50%;
+}
+.workportfolio {
+    width: 100%;
+}
+#filters {
+    font-size: 20px;
+    width: 100%;
+    text-align: center;
+}
+
+#filters li {
+    display: inline-block;
+    padding: 5px 10px;
+}
+
+.fiter {
+    display: block;
+    color: #3d3d3d;
+    cursor: pointer;
+    font-family: sans-serif;
+    font-weight: 300;
+    font-size: 14px;
+    text-transform: uppercase;
+
+}
+
+.filter.active {
+    font-weight: 700;
+    color: #3d3d3d;
+    border-bottom: 1px solid #05c301;
+}
+
+.flex {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.portfolio-wrapper {
+    overflow: hidden;
+    position: relative !important;
+    cursor: pointer;
+}
+
+.portfolioitem img {
+    width: 100%;
+    display: block;
+    position: relative;
+}
+
+.imgDisc2 {
+    position: absolute;
+    color: #fff;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    font-size: 18px;
+    text-align: center;
+    visibility: hidden;
+    opacity: 0;
+    padding-top: 120px;
+    cursor: pointer;
+    transition: 0.5s;
+    top: 0;
+    left: 0;
+    bottom: 0;
+}
+
+.imgDisc2 h1 {
+    font-size: 20px;
+    text-transform: uppercase;
+}
+
+.portfolio-wrapper:hover .imgDisc2 {
+    visibility: visible;
+    opacity: 1;
+}
+
+#portfoliolist .portfolioitem {
+    border: none;
+    width: 20%;
+    float: left;
+    overflow: hidden;
+    display: none;
 }

@@ -61,7 +61,7 @@
                         </ul>
 
                         <a href = "#about">
-                            <div class="scrolldown">
+                            <div class="scrolldown" href="#aboutus">
                                 <img src="images/mouse.png">
                                 <p>ДАЛЬШЕ</p>
                             </div>
@@ -71,7 +71,7 @@
             </div>
         </section>
 
-        <section class="aboutus">
+        <section class="aboutus" id="aboutus">
             <div class="container">
                 <div class="row">
                     <div class="head_white_content">
@@ -110,6 +110,7 @@
         </section>
 
         <section class="features">
+            <div class="container">
             <div class="content">
                 <div class="row">
                     <div class="col-md-12 col-lg-12 col-xl-12 col-12">
@@ -142,18 +143,7 @@
                     </div>
                 </div>
             </div>
-        </section>
-
-        <section class="portfolio">
-            <div class="container">
-                <div class="row">
-                    <div class="head_white_content">
-                        <h3>Портфолио</h3>
-                        <span></span>
-                        <p></p>
-                    </div>
-                </div>
-            </div>
+        </div>
         </section>
 
         <section class="team">
@@ -406,6 +396,58 @@
                         </div>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="clearfix workportfolio">
+                        <div class="flex">
+                        <ul class="clearfix" id="filters">
+                            <li><span class="filter active" data-filter="lend card magaz shop">Все проекты</span></li>
+                            <li><span class="filter" data-filter="lend">Лендинги</span></li>
+                            <li><span class="filter" data-filter="card">Визитки</span></li>
+                            <li><span class="filter" data-filter="magaz">Каталоги</span></li>
+                            <li><span class="filter" data-filter="shop">Интернет-магазины</span></li>
+                        </ul>
+                        </div>
+
+                        <div id="portfoliolist">
+                            <div class="portfolioitem lend" data-cat="lend">
+                                <div class="portfolio-wrapper">
+                                    <img src="images/lend.jpg">
+                                    <div class="imgDisc2">
+                                        <h1>Лендинг</h1>
+                                        <p>Описание</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="portfolioitem card" data-cat="card">
+                                <div class="portfolio-wrapper">
+                                    <img src="images/card.jpg">
+                                    <div class="imgDisc2">
+                                        <h1>Визитка</h1>
+                                        <p>Описание</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="portfolioitem magaz" data-cat="magaz">
+                                <div class="portfolio-wrapper">
+                                    <img src="images/magaz.jpg">
+                                    <div class="imgDisc2">
+                                        <h1>Каталог</h1>
+                                        <p>Описание</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="portfolioitem shop" data-cat="shop">
+                                <div class="portfolio-wrapper">
+                                    <img src="images/shop.jpg">
+                                    <div class="imgDisc2">
+                                        <h1>Интернет-магазин</h1>
+                                        <p>Описание</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -508,6 +550,7 @@
     <script src="script/bxslider.js"></script>
     <script src="script/jquery.flexslider.js"></script>
     <script src="script/jquery.accordion.js"></script>
+    <script src="script/jquery.mixitup.min.js"></script>
     <script src="script/script.js"></script>
 </body>
 </html>

@@ -55,6 +55,30 @@ $(document).ready(function () {
         'display': 'none'
       });
     };
+
+    $(function(){
+        let filterList = {
+            init: function() {
+                $('.workportfolio').mixitup({
+                    targetSelector: '.portfolioitem',
+                    filterSelector: '.filter',
+                    effects: ['fade'],
+                    easing: 'snap',
+                });
+            },
+        };
+        filterList.init();
+    });
+
+    $(document).ready(function() {
+        $("div.scrolldown").click(function () {
+        elementClick = $(this).attr("href")
+        destination = $(elementClick).offset().top;
+        $("html:not(:animated),body:not(:animated)").animate({scrollTop: destination}, 300);
+        return false;
+        });
+    });
+
     $('.accordion').accordion({
         defaultOpen:""
     });
