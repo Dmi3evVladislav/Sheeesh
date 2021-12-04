@@ -10,4 +10,6 @@ console.log('Геолокация:', navigator.geolocation.getCurrentPosition);
 console.log('Язык пользователя:', navigator.language);
 console.log('Онлайн?:', navigator.onLine);
 console.log('Доступна ли Java:', navigator.javaEnabled());
+console.log(navigator.connection);
+console.log('Кол-во ядер:', navigator.hardwareConcurrency);
   
