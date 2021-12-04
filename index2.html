@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>navigator</title>
+</head>
+<body>
+    <p>1) Объект window.navigator содержит информацию браузера пользователя, например название браузера, версия,.... Вы можете получить доступ к объектам navigator без необходимости использования префикса window.</p>
+    <p>2) navigator.product всегда возвращает "Gecko" для всех браузеров.</p>
+    <p>Gecko — свободный движок вывода веб-страниц браузеров Mozilla Firefox, Netscape и других.</p>
+    <p>3) navigator.appName возвращает название приложения браузера. Но на самом деле это не имеет особого смысла, так как почти во всех слуачаях он возваращает "Netscape". Точнее с разными браузерам:</p>
+    <ul>
+        <li>IE11+, Firefox, Chrome и Safari возвращает "Netscape".</li>
+        <li>IE 10 или старее, возвращает "Microsoft Internet Explorer".</li>
+        <li>Opera возвращает​​​​​​​ "Opera".</li>
+    </ul>
+    <p>4) navigator.appCodeName возвращает название кода браузера. Но это не имеет особого смысла, так как все браузеры возвращают значение  "Mozilla", что означает этот браузер совместим с Mozilla</p>
+    <p>5) navigator.appVersion возвращает информацию версии браузера.</p>
+    <p>6) navigator.platform возвращает название платформы (platform), накоторой скомпилирован (compiled) браузер, он может вернуть пустую строку если браузер отказывает или не может определить платформу. Значениями могут быть:</p>
+    <ul>
+        <li><strong>HP-UX</strong></li>
+        <li><strong>Linux i686</strong></li>
+        <li><strong>Linux armv7l</strong></li>
+        <li><strong>Mac68K</strong></li>
+        <li><strong>MacPPC</strong></li>
+        <li><strong>MacIntel</strong></li>
+        <li><strong>SunOS</strong></li>
+        <li><strong>Win16</strong></li>
+        <li><strong>Win32</strong></li>
+        <li><strong>WinCE</strong></li>
+        <li><strong>Etc..</strong></li>
+    </ul>
+    <p>Почти все браузеры, включая Chrome, Edge и Firefox 63 и позднее, при работе на операционной системе Windows возвращают "Win32" даже если работает на версии Windows 64 bit, в то время как Internet Explorer и версии Firefox до версии 63 возвращают "Win64".</p>
+    <p>7) navigator.cookieEnabled возвращает true если браузер включает (enable) Cookie, напротив возвращает false</p>
+    <p>8) navigator.geolocation возвращает объект Geolocation, содержит информацию местопложения пользователя как долгота (longitude), широта (latitude),... . Это позволяет website или приложению предоставить кастомизированный результат основываясь на местопложении пользователя.</p>
+    <script src="script/script2test.js"></script>
+</body>
+</html>
