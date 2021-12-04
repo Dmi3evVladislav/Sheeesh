@@ -1,4 +1,24 @@
 $(document).ready(function () {
+
+    $('.primary-nav-triger').on('click', function() {
+        $('.menu-icon').toggleClass('is-clicked');
+        $('.primary-nav').toggleClass('is-visible');
+        $('body').toggleClass('overflow-hidden')
+
+    });
+
+    $('.primary-nav').on('click', "a", function(event){
+            event.preventDefault();
+            $('.menu-icon').toggleClass('is-clicked');
+            $('.primary-nav').toggleClass('is-visible');
+            $('body').toggleClass('overflow-hidden');
+            let id = $(this).attr('href');
+            let top = $(id).offset().top -140;
+            $('body,html').animate({scrollTop: top}, 1000)
+        
+    });
+
+
     if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phone|Kindle|Silk|Opera Mini/i.test(navigator.userAgent)) {
     $(".bxslider").bxSlider({
         startSlide: 0,
@@ -110,3 +130,5 @@ let af2 = $(".afteffperc2").text();
 $(".afteff2").css({
     'width': af2,
 })
+
+console.log(navigator.userAgent);

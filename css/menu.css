@@ -2,7 +2,7 @@
     display: inline-block;
     position: absolute;
     top: 50%;
-    right: 10%;
+    left: 20%;
     width: 40px;
     height: 2px;
     background-color: #464646;
@@ -15,6 +15,8 @@
     width: 100%;
     height: 100%;
     background-color: #464646;
+
+    transition: transform .3s, top .3s;
 }
 
 .primary-nav-triger .menu-icon::before {
@@ -24,3 +26,73 @@
 .primary-nav-triger .menu-icon::after {
     top: 10px;
 }
+
+.primary-nav-triger {
+    position: absolute;
+    right: 20px;
+    top: 0;
+    height: 100%;
+    width: 60px;
+}
+
+/* .menu {
+    position: relative;
+} */
+
+.primary-nav-triger .menu-icon.is-clicked {
+    background-color: rgba(255, 255, 255, 0);
+}
+
+.primary-nav-triger .menu-icon.is-clicked::before {
+    top: 0;
+    transform: rotate(135deg);
+}
+
+.primary-nav-triger .menu-icon.is-clicked::after {
+    top: 0;
+    transform: rotate(225deg);
+}
+
+.primary-nav {
+    z-index: 9998;
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    padding: 150px 0 0;
+    background: rgba(0, 0, 0, 0.95);
+    text-align: center;
+    backface-visibility: hidden;
+    overflow: auto;
+    transform: translateY(-100%);
+    transition-property: transform;
+    transition-duration: 0.4s;
+}
+
+.primary-nav li {
+    font-weight: 300;
+    margin: .2em 0;
+    font-size: 30px;
+    text-transform: capitalize;
+
+}
+
+.primary-nav.is-visible {
+    transform: translateY(0);
+}
+
+.primary-nav a {
+    text-transform: uppercase;
+    display: inline-block;
+    padding: 20px 1em;
+    border-radius: 0.25em;
+    transition: background 0.2s;
+    color: fff;
+    font-family: 'Roboto', sans-serif;
+}
+
+.primary-nav a:hover {
+    background-color: #05c301;
+}
+
