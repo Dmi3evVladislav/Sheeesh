@@ -509,21 +509,21 @@
                         </div>
                     </div>
                 </div>
-                <form>
+                <form method="post" id="send_form">
                     <div class="row">
                         <div class="col-md-6 col-xl-6 col-lg-6 col-6 textinput">
                             <p>Имя<span>*</span></p>
-                            <input type="text" id="clientname">
+                            <input type="text" id="name" name="name">
                         </div>
                         <div class="col-md-6 col-xl-6 col-lg-6 col-6 textinput">
                             <p>Эл. почта<span>*</span></p>
-                            <input type="text" id="clientmail">
+                            <input type="text" name = "email" id="email">
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-xl-12 col-lg-12 col-md-12 col-12 textmsg">
                             <p>Коментарий к заказу</p>
-                            <textarea id="msgord" cols="30" rows="10"></textarea>
+                            <textarea name = "msg" id="msg" cols="30" rows="10"></textarea>
                             <input type="button" class="submit" value="Отправить запрос">
                             <p class="comment"><span>*</span> - обязательные поля к заполнению</p>
                         </div>

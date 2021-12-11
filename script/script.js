@@ -1,5 +1,26 @@
 $(document).ready(function () {
 
+    $(".submit").on('click', function(){
+        if ($('#name').val() !='' && $('#email').val() !='') {
+            fetch('script/send.php', {
+                method: 'POST',
+                headers: {
+                    'Content-type' : 'application/x-www-form-urlencoded'
+                },
+                body: $("#send_form").serialize()
+            }).then((response) => response.json()).then((data) => {
+                if (data.status === 'ok') {
+                    alert("OK")
+                } if (data.status === 'error') {
+                    alert("ERROR")
+                }
+            });
+        } else {
+            alert("Заполните обязательные поля!")
+        }
+    });
+
+
     $('.primary-nav-triger').on('click', function() {
         $('.menu-icon').toggleClass('is-clicked');
         $('.primary-nav').toggleClass('is-visible');
