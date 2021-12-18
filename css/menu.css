@@ -30,7 +30,7 @@
 .primary-nav-triger {
     position: absolute;
     right: 20px;
-    top: 0;
+    top: 20px;
     height: 100%;
     width: 60px;
 }
@@ -96,3 +96,7 @@
     background-color: #05c301;
 }
 
+.menu {
+    position: relative;
+    height: 100px;
+}

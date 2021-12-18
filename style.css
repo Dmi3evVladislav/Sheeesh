@@ -244,7 +244,7 @@ h3 {
 }
 
 .desc{
-    height: 240px;
+    height: 320px;
     background-color: #1f282c;
     margin-bottom: 94px;
     padding-top: 30px;
@@ -587,7 +587,7 @@ h3 {
     text-align: center;
     visibility: hidden;
     opacity: 0;
-    padding-top: 120px;
+    padding-top: 50px;
     cursor: pointer;
     transition: 0.5s;
     top: 0;
@@ -611,4 +611,22 @@ h3 {
     float: left;
     overflow: hidden;
     display: none;
-};
+}
+
+.purchase input {
+    width: 205px;
+    height: 50px;
+    letter-spacing: 1px;
+    background: #05c301;
+    border: 1px solid #05c301;
+    color: #fff;
+    display: block;
+    margin: 50px auto 0;
+    font-weight: 700;
+    text-transform: uppercase;
+    transition: 0.7s;
+}
+
+.portfolio {
+    margin-bottom: 42px;
+}
