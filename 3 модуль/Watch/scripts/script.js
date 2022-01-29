@@ -13,12 +13,12 @@ function draw_division(R) {
         qX = 0.9 * pX;
         qY = 0.9 * pY;
 
-        pX += R; qY += R;
-        qX += R; pY += R;
+        pX += R+2; qY += R+2;
+        qX += R+2; pY += R+2;
 
         let line = new Path2D();
         line.moveTo(pX, pY);
-        line.lineTo(pX, pY);
+        line.lineTo(qX, qY);
 
         if (i % 5 == 0) {
             context.lineWidth = 3;
