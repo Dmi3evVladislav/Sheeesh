@@ -10,7 +10,9 @@ $(document).ready(function () {
                 body: $("#send_form").serialize()
             }).then((response) => response.json()).then((data) => {
                 if (data.status === 'ok') {
-                    alert("OK")
+                    $(".contact").css({
+                        'border': '2px green'
+                    })
                 } if (data.status === 'error') {
                     alert("ERROR")
                 }
