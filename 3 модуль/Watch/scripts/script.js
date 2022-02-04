@@ -42,7 +42,31 @@ function draw_watch() {
     draw_division(R);
 }
 
-window.onload = function() {
+let hours = 0;
+let minutes = 0;
+let seconds = 0;
+
+function get_time(hours, minutes, seconds){
+let date = new Date();
+hours = date.getHours();
+minutes = date.getMinutes();
+seconds = date.getSeconds();
+
+let secondsAngle = (seconds / 60) * (2 * Math.PI);
+let minutesAngle = (minutes / 60) * (2 * Math.PI);
+let hoursAngle = ((hours % 12) / 12) * (2 * Math.PI);
+
+document.getElementById("fulltimeform").innerHTML = hours + ":" + minutes + ":" + seconds
+
+}
+
+function draw_hour() {
+
+}
+
+window.onload = function watchwork() {
     draw_watch();
+    get_time();
+    setTimeout(watchwork, 1000);
 }
 
