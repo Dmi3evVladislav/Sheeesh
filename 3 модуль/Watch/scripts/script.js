@@ -31,10 +31,9 @@ function draw_division(R) {
 }
 
 
-function draw_watch() {
+function draw_watch(R) {
     context.clearRect(0, 0, 300, 300);
 
-    let R = 150;
     let circle = new Path2D();
     circle.arc(R+2, R+2, R, 0, 2*Math.PI); 
     context.stroke(circle);
@@ -42,31 +41,101 @@ function draw_watch() {
     draw_division(R);
 }
 
-let hours = 0;
-let minutes = 0;
-let seconds = 0;
+function get_time(R){
+    let date = new Date();
+    let day = date.getDate();
+    let mounth = date.getMonth()+1;
+    let year = date.getFullYear();
+    let hours = date.getHours();
+    let minutes = date.getMinutes();
+    let seconds = date.getSeconds();
 
-function get_time(hours, minutes, seconds){
-let date = new Date();
-hours = date.getHours();
-minutes = date.getMinutes();
-seconds = date.getSeconds();
+    let hoursAngle = ((hours % 12) / 12) * (2 * Math.PI);
+    let minutesAngle = (minutes / 60) * (2 * Math.PI);
+    let secondsAngle = (seconds / 60) * (2 * Math.PI);
 
-let secondsAngle = (seconds / 60) * (2 * Math.PI);
-let minutesAngle = (minutes / 60) * (2 * Math.PI);
-let hoursAngle = ((hours % 12) / 12) * (2 * Math.PI);
+    hoursAngle = Math.PI / 2 - hoursAngle;
+    minutesAngle = Math.PI / 2 - minutesAngle;
+    secondsAngle = Math.PI / 2 - secondsAngle;
 
-document.getElementById("fulltimeform").innerHTML = hours + ":" + minutes + ":" + seconds
+    document.getElementById("fulltimeform").innerHTML = hours + ":" + minutes + ":" + seconds;
+    document.getElementById("fulldateform").innerHTML = day + "." + mounth + "." + year;
+
+    draw_hour(hoursAngle, R)
+    draw_minute(minutesAngle, R)
+    draw_second(secondsAngle, R)
+
+    return hours, minutes, seconds, hoursAngle, minutesAngle, secondsAngle;
 
 }
 
-function draw_hour() {
 
+function draw_hour(hoursAngle, R) {
+    let hX, hY;
+
+    hX = Math.cos(hoursAngle) * 0.5 * R;
+    hY = -Math.sin(hoursAngle) * 0.5 * R;
+
+    hX += R;
+    hY += R;
+
+    let hourline = new Path2D();
+
+    hourline.moveTo(R+2, R+2);
+    hourline.lineTo(hX, hY);
+
+    context.lineWidth = 3.5;
+    context.stroke(hourline);
+}
+
+function draw_minute(minutesAngle, R){
+    let mX, mY;
+
+    mX = Math.cos(minutesAngle) * 0.7 * R;
+    mY = -Math.sin(minutesAngle) * 0.7 * R;
+
+    mX += R;
+    mY += R;
+
+    let minuteline = new Path2D();
+
+    minuteline.moveTo(R+2, R+2);
+    minuteline.lineTo(mX, mY);
+
+    context.lineWidth = 2.5;
+    context.stroke(minuteline);
+}
+
+function draw_second(secondsAngle, R){
+    let sX, sY;
+
+    sX = Math.cos(secondsAngle) * 0.9 * R;
+    sY = -Math.sin(secondsAngle) * 0.9 * R;
+
+    sX += R;
+    sY += R;
+
+    let secondline = new Path2D();
+
+    secondline.moveTo(R+2, R+2);
+    secondline.lineTo(sX, sY);
+
+    context.strokeStyle = "red";
+    context.lineWidth = 2;
+    context.stroke(secondline);
+    context.strokeStyle = "black";
+    context.lineWidth = 1;
+}
+
+function test_settimeout() {
+    
 }
 
 window.onload = function watchwork() {
-    draw_watch();
-    get_time();
+    let R = 150
+    draw_watch(R);
+    get_time(R);
+    test_settimeout();
     setTimeout(watchwork, 1000);
 }
 
