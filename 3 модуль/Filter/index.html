@@ -12,9 +12,9 @@
     <script>
         function stsearch() {
             let textarea = document.getElementById("sandbox"),
-            text = textarea.value
+            text = textarea.value.split(" ")
             dict = {}
-            text.foreach(function(x) {
+            text.forEach(function(x) {
                 if(!(x in dict)){
                     dict[x] = 0
                 }
