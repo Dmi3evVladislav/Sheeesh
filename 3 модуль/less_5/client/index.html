@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style/style.css">
+</head>
+<body>
+    <div id="app">{{ message }}</div>
+    <div id="appinput">
+        <input type="text" v-model="message">
+        <p>{{message}}</p>
+    </div>
+    <div id="appcheck">
+        <input type="checkbox" v-model="checked">
+        <p>{{ checked }}</p>
+    </div>
+    <div id="appradio">
+        <label><input type="radio" value="First" v-model="picked">Первый</label>
+        <label><input type="radio" value="Second" v-model="picked">Второй</label>
+        <p>{{ picked }}</p>
+    </div>
+    <div id="appselect">
+        <select v-model="language">
+            <option>Python</option>
+            <option>C#</option>
+            <option>JS</option>
+            <option>PHP</option>
+        </select>
+        <p>Язык: {{language}}</p>
+    </div>
+    <div id="appexpression">
+        <div>
+            <input type="number" v-model="n">
+            <p>Удвоенное число: {{ n * 2 }}</p>
+        </div>
+        <div>
+            <input type="checkbox" v-model="checked"> {{ checked ? "Да" : "Нет"}}
+        </div>
+        <div>
+            <input type="text" v-model="message">
+            <p>{{ message.split("").reverse().join("") }}</p>
+        </div>
+    </div>
+    <div id="appgoogle">
+        <input type="text" v-model="query">
+        <a v-bind:href="'https://google.com/search?q=' + query">Искать!</a>
+    </div>
+    <div id="appclass">
+        <label>
+            <input type="checkbox" v-model="headerStyle.purple"> Фиолетовый
+        </label>
+        <label>
+            <input type="checkbox" v-model="headerStyle.underline"> Подчеркнутый
+        </label>
+        <h1 v-bind:class="{'header--purple': headerStyle.purple,
+        'header--underline': headerStyle.underline}">Заголовок</h1>
+    </div>
+    <div id="apprange">
+        <input type="range" v-model="sizeFactor" min="1" max="13" step="0.1">
+        <p v-bind:style="{ 'font-size': sizeFactor + 'em'}">Текст</p>
+    </div>
+    <div id="apparray">
+        <ul>
+            <li v-for="(item, index) in items">
+                {{ item.text }} &mdash; {{ index }}
+            </li>
+        </ul>
+    </div>
+
+    <script src="script/jquery-2.1.1.js"></script> <!--Проверить версию, может не работать-->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+    <script src="script/script.js"></script>
+</body>
+</html>
