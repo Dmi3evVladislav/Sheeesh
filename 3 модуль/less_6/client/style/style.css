@@ -1,0 +1,7 @@
+.trans-enter-active, .trans-leave-active {
+    transition: opacity 1s ease-in-out;
+}
+
+.trans-leave-to, .trans-enter {
+    opacity: 0;
+}

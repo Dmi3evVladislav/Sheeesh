@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style/style.css">
+</head>
+<body>
+    <div id="app">
+        <button v-on:click="double">Удвоить</button>
+        <p>{{ number }}</p>
+    </div>
+
+    <div id="app-list">
+        <input type="text" v-model="thing" v-on:keydown.13="addItem">
+        <ol>
+            <li v-for="(item, index) in list" v-on:click="removeItem(index)">{{ item }}</li>
+        </ol>
+    </div>
+
+    <div id="app-computed">
+        <select v-model="selected" multiple size="5">
+            <option v-for="i in 5">{{ i }}</option>
+        </select>
+        <p>Среднее арифметическое: {{ avarage }}</p>
+    </div>
+
+    <div id="app-watch">
+        <button v-on:click="decrease">-</button>
+        {{ number }}
+        <button v-on:click="increase">+</button>
+        <p>Колиство изменений числа: {{ changeCount }}</p>
+    </div>
+
+    <div id="app-if">
+        <input type="checkbox" v-model="visible">
+        <transition name="trans">
+            <h1 v-show="visible">Меня видно</h1>
+        </transition>
+    </div>
+
+    <script src="script/jquery-2.1.1.js"></script> <!--Проверить версию, может не работать-->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+    <script src="script/script.js"></script>
+</body>
+</html>
