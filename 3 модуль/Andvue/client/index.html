@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style/style.css">
+    <title>And</title>
+</head>
+<body>
+    <div id="appexpression">
+            <input type="checkbox" v-model="checked1">
+            <h1>&&</h1>
+            <input type="checkbox" v-model="checked2">
+            <h1 class="ravno">=</h1>
+            <h1>{{ checked1 && checked2 ? "true" : "false"}}</h1> 
+    </div>
+    <script src="script/jquery-2.1.1.js"></script> <!--Проверить версию, может не работать-->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+    <script src="script/script.js"></script>
+</body>
+</html>

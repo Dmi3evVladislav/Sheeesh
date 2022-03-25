@@ -1,0 +1,17 @@
+#appexpression {
+    display: flex;
+    flex-direction: row;
+    margin-top: 20%;
+    font-size: 30px;
+    font-weight: bold;
+    justify-content: center;
+    align-items: center;
+}
+input {
+    margin-left: 20px;
+    margin-right: 20px;
+    transform: scale(3.5);
+}
+.ravno {
+    margin-right: 5px;
+}
