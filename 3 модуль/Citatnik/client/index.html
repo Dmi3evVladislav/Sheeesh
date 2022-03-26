@@ -10,5 +10,13 @@
     <div class="cent">
         
     </div>
+    <script src="scripts/jquery-2.1.1.js"></script>
+    <script src="scripts/script.js"></script>
+    <script>$(document).ready(function(){
+        $.get("/quote", function (data) {
+            let datan = JSON.parse(data)
+            $(".cent").html(datan.number + " " + datan.text);
+        })
+    })</script>
 </body>
 </html>
