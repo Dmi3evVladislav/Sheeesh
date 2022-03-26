@@ -4,19 +4,15 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles/style.css">
     <title>Цитатник</title>
 </head>
 <body>
     <div class="cent">
-        
     </div>
+    <img src="styles/5cb1ac8350f4816a1609e104.png" alt="auf">
     <script src="scripts/jquery-2.1.1.js"></script>
     <script src="scripts/script.js"></script>
-    <script>$(document).ready(function(){
-        $.get("/quote", function (data) {
-            let datan = JSON.parse(data)
-            $(".cent").html(datan.number + " " + datan.text);
-        })
-    })</script>
+    
 </body>
 </html>
