@@ -5,6 +5,10 @@
             <c-tag></c-tag>
             <p><input type="text" v-model="msg"></p>
             <par-cap v-bind:p-text="msg" v-on:update="receive"></par-cap>
+
+            <router-link to="/add">Увеличить</router-link>
+            <router-link to="/deduct">Уменьшить</router-link>
+            <div><router-view></router-view></div>
         </div>
 </template>
 
