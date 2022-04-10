@@ -1,17 +1,17 @@
 <template>
     <div>
         <form v-on:keydown.enter="registration">
-            <input type="text" placeholder="Логин" v-model="login">
-            <input type="password" placeholder="Пароль" v-model="password">
-            <input type="password" placeholder="Повторите Пароль" v-model="passwordRepear">
-            <button v-on:click="registration">Зарегестрироваться</button>
+            <input type="text" v-model="login" placeholder="Логин">
+            <input type="password" v-model="password" placeholder="Пароль">
+            <input type="password" v-model="passwordRepeat" placeholder="Повторите пароль">
+            <button v-on:click="registration">Зарегистрироваться</button>
         </form>
     </div>
 </template>
 
 <script>
     module.exports = {
-        data: function () {
+        data: function() {
             return {
                 login: "",
                 password: "",
@@ -19,16 +19,14 @@
             }
         },
         methods: {
-                registration: function () {
-                    if (this.password === this.passwordRepeat){
-                        let promice = this.$auth.register(this.login, this.password);
-                        promice.then(function(){
-                            this.$router.push("/login");
-                        }).catch(function(response){
-                    console.log("Ошибка "+ response);
-                })
-                    }
+            registration: function() {
+                if (this.password === this.passwordRepeat) {
+                    let promise = this.$auth.register(this.login, this.password);
+                    promise.then(function() {
+                        this.$router.push("/login");
+                    })
                 }
             }
+        }
     }
 </script>
