@@ -10,18 +10,19 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "4.16.3",
-    "mongodb": "3.0.11",
-    "vue-jwt-mongo": "1.6.5",
     "babel-core": "^6.26.3",
     "babel-plugin-transform-runtime": "6.23.0",
     "babel-preset-es2015": "6.24.1",
     "babel-runtime": "6.26.0",
+    "express": "4.16.3",
     "jquery": "3.3.1",
+    "mongodb": "3.0.11",
+    "multer": "1.3.1",
     "vue": "2.5.16",
+    "vue-jwt-mongo": "1.6.5",
+    "vue-resource": "1.5.1",
     "vue-router": "3.0.1",
     "vue-template-compiler": "2.5.16",
-    "vueify": "9.4.1",
-    "vue-resource": "1.5.1"
+    "vueify": "9.4.1"
   }
 }

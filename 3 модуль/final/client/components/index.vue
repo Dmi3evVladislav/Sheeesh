@@ -9,7 +9,7 @@
         mounted: function() {
             console.log(this.$auth);
             if (this.$auth.isLoggedIn()) {
-                console.log("Авторизован");
+                this.$router.push("/feed");
             } else {
                 this.$router.push("/login");
             }
