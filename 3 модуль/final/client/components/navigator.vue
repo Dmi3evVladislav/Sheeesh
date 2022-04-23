@@ -4,6 +4,7 @@
             <div class="row">
                 <div class="col-md-12 col-lg-12 col-xl-12 col-12">
                     <router-link to="/feed" class="navbar-brand"><img src=".\images\sungram3.png" alt="logo"></router-link>
+                    <router-link to="/upload" class="navbar-brand uploadbutt"><img class="upload" src=".\images\newupload.png" alt="upload"></router-link>
                     <a href="#" v-on:click="logout">Выйти</a>
                 </div>
             </div>
@@ -40,5 +41,12 @@
     }
     img {
         width: 150px;
+    }
+    .uploadbutt{
+        float: right;
+    }
+    .upload {
+        margin-top: 5px;
+        width: 40px;
     }
 </style>

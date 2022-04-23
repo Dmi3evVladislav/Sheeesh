@@ -21,7 +21,8 @@ app.post("/upload", [vjmServer.jwtProtector, upload.single("picture")], function
     database.db("photofeed").collection("uploads").insert({
         user: request.user.username,
         image: request.file.filename,
-        date: new Date()
+        date: new Date(),
+        descr: request.descr
     });
     response.sendStatus(200);
 })
@@ -38,7 +39,7 @@ app.post("/auth/register", function(request, response){
 })
 
 app.get('/feed', vjmServer.jwtProtector, function(request, response) {
-    database.db("photofeed").collection('uploads').find().sort({data: -1}).limit(10).toArray(function(err, documents) {
+    database.db("photofeed").collection('uploads').find().sort({date: -1}).limit(10).toArray(function(err, documents) {
         response.json(documents)
     })
 })
