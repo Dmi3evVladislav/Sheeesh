@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watchbild": "watchify client/scripts/main.js --outfile client/scripts/boundle.js --transform vueify" 
   },
   "keywords": [],
   "author": "",

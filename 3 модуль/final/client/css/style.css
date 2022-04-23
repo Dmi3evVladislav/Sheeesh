@@ -1,6 +1,3 @@
 body {
-    background-color: rgb(27, 27, 27);
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    background: whitesmoke;
 }

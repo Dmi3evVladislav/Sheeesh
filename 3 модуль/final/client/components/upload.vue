@@ -3,7 +3,7 @@
         <navigator>
 
         </navigator>
-        <div>
+        <div class="uploadpanel">
             <img v-bind:src="image" v-if="previewd">
             <form v-on:submit="upload">
                 <input type="file" accept="image/*" name="picture" v-on:change="preview">
@@ -50,3 +50,8 @@ const { methods }=require("./reg.vue")
         }
     }
 </script>
+<style scoped>
+    .uploadpanel {
+        position: relative;
+    }
+</style>

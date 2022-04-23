@@ -1,1 +1,0 @@
-console.error("Error: Can't walk dependency graph: Cannot find module 'C:\\Users\\Студент\\Documents\\GitHub\\Sheeesh\\3 модуль\\final\\client\\main.js' from 'C:\\Users\\Студент\\Documents\\GitHub\\Sheeesh\\3 модуль\\final\\client\\_fake.js'\n    required by C:\\Users\\Студент\\Documents\\GitHub\\Sheeesh\\3 модуль\\final\\client\\_fake.js");

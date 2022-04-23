@@ -28,6 +28,14 @@ app.post("/upload", [vjmServer.jwtProtector, upload.single("picture")], function
 
 app.post("/auth/register", vjmServer.registerHandler);
 app.post("/auth/login", vjmServer.loginHandler)
+app.post("/auth/register", function(request, response){
+    database.db("photofeed").collection("mobiles").insert({
+        user: request.user.username,
+        mobtel: request.auth.mobilenumber,
+        date: new Date()
+    });
+    response.sendStatus(200);
+})
 
 mongoClient.connect(urlMongo, function(err, db) {
     if (err) console.log(err.stack);

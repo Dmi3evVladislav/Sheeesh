@@ -1,5 +1,8 @@
 <template>
     <div>
+        <navigator>
+
+        </navigator>
         <button v-on:click="logout">Выйти</button>
     </div>
 </template>
@@ -11,6 +14,13 @@
                 this.$auth.logOut();
                 this.$router.push('/')
             }
+        },
+        components: {
+            navigator: require("./navigator.vue")
         }
     }
 </script>
+
+<style scoped>
+    
+</style>

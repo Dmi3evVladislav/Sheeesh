@@ -1,12 +1,10 @@
 <template>
-    <div>
-        <div class="navbar navbar-default navbar-fixed-top">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <router-link to="/feed" class="navbar-brand">Фотолента</router-link>
-                    <ul class="nav navbar-nav navbar-left">
-                        <li><a href="#" v-on:click="logout">Выйти</a></li>
-                    </ul>
+    <div class="header">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 col-lg-12 col-xl-12 col-12">
+                    <router-link to="/feed" class="navbar-brand"><img src=".\images\sungram3.png" alt="logo"></router-link>
+                    <a href="#" v-on:click="logout">Выйти</a>
                 </div>
             </div>
         </div>
@@ -28,3 +26,18 @@
         },
     }
 </script>
+
+<style scoped>
+    .header {
+        padding-bottom: 0px;
+        padding-top: 10px;
+        
+        position: fixed;
+        width: 100%;
+        background-color: white;
+        box-shadow: 2px black;
+    }
+    img {
+        width: 150px;
+    }
+</style>
