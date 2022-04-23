@@ -281,7 +281,7 @@ if (module.hot) {(function () {  var hotAPI = require("vue-hot-reload-api")
   }
 })()}
 },{"vue":21,"vue-hot-reload-api":17}],5:[function(require,module,exports){
-var __vueify_style_dispose__ = require("vueify/lib/insert-css").insert(".feed[data-v-cb22cdae] {\n    padding-top: 78px;\n}\n.center[data-v-cb22cdae] {\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n}\nimg[data-v-cb22cdae] {\n    width: 350px;\n}")
+var __vueify_style_dispose__ = require("vueify/lib/insert-css").insert(".feed[data-v-cb22cdae] {\n    padding-top: 100px;\n}\n.center[data-v-cb22cdae] {\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n}\nimg[data-v-cb22cdae] {\n    width: 350px;\n}\n.panelfeed[data-v-cb22cdae] {\n    background-color: white;\n    padding-top: 10px;\n    padding-bottom: 20px;\n    margin-bottom: 10px;\n}")
 ;(function(){
 "use strict";
 

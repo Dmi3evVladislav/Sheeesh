@@ -54,7 +54,7 @@ module.exports = {
 
 <style scoped>
     .feed {
-        padding-top: 78px;
+        padding-top: 100px;
     }
     .center {
         display: flex;
@@ -63,5 +63,11 @@ module.exports = {
     }
     img {
         width: 350px;
+    }
+    .panelfeed {
+        background-color: white;
+        padding-top: 10px;
+        padding-bottom: 20px;
+        margin-bottom: 10px;
     }
 </style>
