@@ -54,4 +54,7 @@ const { methods }=require("./reg.vue")
     .uploadpanel {
         position: relative;
     }
+    img {
+        max-width: 600px;
+    }
 </style>

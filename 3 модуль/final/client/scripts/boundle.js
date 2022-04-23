@@ -280,7 +280,7 @@ if (module.hot) {(function () {  var hotAPI = require("vue-hot-reload-api")
     hotAPI.reload("data-v-6f05b921", __vue__options__)
   }
 })()}
-},{"vue":20,"vue-hot-reload-api":16}],5:[function(require,module,exports){
+},{"vue":21,"vue-hot-reload-api":17}],5:[function(require,module,exports){
 ;(function(){
 "use strict";
 
@@ -292,14 +292,15 @@ module.exports = {
         }
     },
     components: {
-        navigator: require("./navigator.vue")
+        navigator: require("./navigator.vue"),
+        navigator2: require("./navigator2.vue")
     }
 };
 })()
 if (module.exports.__esModule) module.exports = module.exports.default
 var __vue__options__ = (typeof module.exports === "function"? module.exports.options: module.exports)
 if (__vue__options__.functional) {console.error("[vueify] functional components are not supported and should be defined in plain js files using render functions.")}
-__vue__options__.render = function render () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('navigator'),_vm._v(" "),_c('button',{on:{"click":_vm.logout}},[_vm._v("Выйти")])],1)}
+__vue__options__.render = function render () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('navigator'),_vm._v(" "),_c('button',{on:{"click":_vm.logout}},[_vm._v("Выйти")]),_vm._v(" "),_c('navigator2')],1)}
 __vue__options__.staticRenderFns = []
 __vue__options__._scopeId = "data-v-2345b14e"
 if (module.hot) {(function () {  var hotAPI = require("vue-hot-reload-api")
@@ -309,10 +310,10 @@ if (module.hot) {(function () {  var hotAPI = require("vue-hot-reload-api")
   if (!module.hot.data) {
     hotAPI.createRecord("data-v-2345b14e", __vue__options__)
   } else {
-    hotAPI.reload("data-v-2345b14e", __vue__options__)
+    hotAPI.rerender("data-v-2345b14e", __vue__options__)
   }
 })()}
-},{"./navigator.vue":7,"vue":20,"vue-hot-reload-api":16}],6:[function(require,module,exports){
+},{"./navigator.vue":7,"./navigator2.vue":8,"vue":21,"vue-hot-reload-api":17}],6:[function(require,module,exports){
 ;(function(){
 "use strict";
 
@@ -342,7 +343,7 @@ if (module.hot) {(function () {  var hotAPI = require("vue-hot-reload-api")
     hotAPI.reload("data-v-79e90d52", __vue__options__)
   }
 })()}
-},{"vue":20,"vue-hot-reload-api":16}],7:[function(require,module,exports){
+},{"vue":21,"vue-hot-reload-api":17}],7:[function(require,module,exports){
 var __vueify_style_dispose__ = require("vueify/lib/insert-css").insert(".header[data-v-0cf71057] {\n    padding-bottom: 0px;\n    padding-top: 10px;\n    \n    position: fixed;\n    width: 100%;\n    background-color: white;\n    box-shadow: 2px black;\n}\nimg[data-v-0cf71057] {\n    width: 150px;\n}")
 ;(function(){
 "use strict";
@@ -378,7 +379,43 @@ if (module.hot) {(function () {  var hotAPI = require("vue-hot-reload-api")
     hotAPI.rerender("data-v-0cf71057", __vue__options__)
   }
 })()}
-},{"vue":20,"vue-hot-reload-api":16,"vueify/lib/insert-css":21}],8:[function(require,module,exports){
+},{"vue":21,"vue-hot-reload-api":17,"vueify/lib/insert-css":22}],8:[function(require,module,exports){
+var __vueify_style_dispose__ = require("vueify/lib/insert-css").insert(".boter[data-v-dbfab82a] {\n    padding-bottom: 0px;\n    padding-top: 1px;\n    position: fixed;\n    width: 100%;\n    bottom: 0;\n    background-color: white;\n    box-shadow: 2px black;\n}\n.navbar-brand[data-v-dbfab82a]{\n    display: flex;\n    justify-content: center;\n    align-items: center;\n}\nimg[data-v-dbfab82a] {\n    width: 50px;\n}")
+;(function(){
+"use strict";
+
+module.exports = {
+    mounted: function mounted() {
+        if (!this.$auth.isLoggedIn()) {
+            this.$router.push("/login");
+        }
+    },
+    methods: {
+        logout: function logout() {
+            this.$auth.logOut();
+            this.$router.push('/');
+        }
+    }
+};
+})()
+if (module.exports.__esModule) module.exports = module.exports.default
+var __vue__options__ = (typeof module.exports === "function"? module.exports.options: module.exports)
+if (__vue__options__.functional) {console.error("[vueify] functional components are not supported and should be defined in plain js files using render functions.")}
+__vue__options__.render = function render () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"boter"},[_c('div',{staticClass:"container"},[_c('div',{staticClass:"row"},[_c('div',{staticClass:"col-md-12 col-lg-12 col-xl-12 col-12"},[_c('router-link',{staticClass:"navbar-brand",attrs:{"to":"/upload"}},[_c('img',{attrs:{"src":".\\images\\newupload.png","alt":"upload"}})])],1)])])])}
+__vue__options__.staticRenderFns = []
+__vue__options__._scopeId = "data-v-dbfab82a"
+if (module.hot) {(function () {  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), true)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  module.hot.dispose(__vueify_style_dispose__)
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-dbfab82a", __vue__options__)
+  } else {
+    hotAPI.rerender("data-v-dbfab82a", __vue__options__)
+  }
+})()}
+},{"vue":21,"vue-hot-reload-api":17,"vueify/lib/insert-css":22}],9:[function(require,module,exports){
 var __vueify_style_dispose__ = require("vueify/lib/insert-css").insert(".regpage[data-v-41e8f3d8]{\r\n    width: 100%;\r\n}\r\nimg[data-v-41e8f3d8] {\r\n    width: 175px;\r\n}\r\nform[data-v-41e8f3d8] {\r\n    font-weight: bold;\r\n    color: rgb(163, 163, 163);\r\n    border: 1px solid rgb(223, 222, 222);\r\n    position: absolute;\r\n    height: 592px;\r\n    right: 0;\r\n    top: 0;\r\n    bottom: 0;\r\n    left: 0;\r\n    margin: auto;\r\n    z-index: 1;\r\n    width: 340px;\r\n    display: flex;\r\n    flex-direction: column;\r\n    align-items: center;\r\n    padding: 30px;\r\n    background: white;\r\n    text-align: center;\r\n}\r\ninput[data-v-41e8f3d8] {\r\n    margin-bottom: 10px;\r\n    width: 100%;\r\n    border: none;\r\n    background-color: whitesmoke;\r\n    outline: none !important;\r\n    height: 35px;\r\n    padding-left: 10px;\r\n}\r\n.logwithSP[data-v-41e8f3d8] {\r\n    background: linear-gradient(31deg, rgba(56,89,250,1) 0%, rgba(125,44,249,1) 24%, rgba(205,45,249,1) 52%, rgba(255,166,5,1) 91%);\r\n    border: 0;\r\n    outline: none !important;\r\n    border-radius: 3px;\r\n    height: 35px;\r\n    width: 100%;\r\n    color: white;\r\n    font-weight: bold;\r\n}\r\nbutton[data-v-41e8f3d8] {\r\n    background: linear-gradient(31deg, rgba(56,89,250,1) 35%, rgba(84,5,255,1) 80%);\r\n    border: 0;\r\n    outline: none !important;\r\n    border-radius: 3px;\r\n    height: 35px;\r\n    width: 100%;\r\n    color: white;\r\n    font-weight: bold;\r\n    margin-top: 5px;\r\n}\r\n.orline[data-v-41e8f3d8] {\r\n    padding-top: 10px;\r\n    display: flex;\r\n}\r\n.orline p[data-v-41e8f3d8] {\r\n    margin-left: 5px;\r\n    margin-right: 5px;\r\n}\r\nhr[data-v-41e8f3d8] {\r\n    border: none;\r\n    background-color: rgb(30 30 30);\r\n    color: rgb(163, 163, 163);\r\n    height: 3px;\r\n    width: 116px;\r\n    position: relative;\r\n    top: -5px;\r\n}\r\n.noreg[data-v-41e8f3d8] {\r\n    display: flex;\r\n    flex-direction: column;\r\n}\r\n.noreg p[data-v-41e8f3d8] {\r\n    margin-top: 15px;\r\n    margin-bottom: 0;\r\n}\r\na[data-v-41e8f3d8] {\r\n    text-decoration: none;\r\n    color: rgb(83, 82, 82);\r\n}")
 ;(function(){
 "use strict";
@@ -421,7 +458,7 @@ if (module.hot) {(function () {  var hotAPI = require("vue-hot-reload-api")
     hotAPI.reload("data-v-41e8f3d8", __vue__options__)
   }
 })()}
-},{"vue":20,"vue-hot-reload-api":16,"vueify/lib/insert-css":21}],9:[function(require,module,exports){
+},{"vue":21,"vue-hot-reload-api":17,"vueify/lib/insert-css":22}],10:[function(require,module,exports){
 var __vueify_style_dispose__ = require("vueify/lib/insert-css").insert(".logpage[data-v-6648f352]{\r\n    width: 100%;\r\n}\r\nimg[data-v-6648f352] {\r\n    width: 175px;\r\n}\r\nform[data-v-6648f352] {\r\n    font-weight: bold;\r\n    color: rgb(163, 163, 163);\r\n    border: 1px solid rgb(223, 222, 222);\r\n    position: absolute;\r\n    height: 500px;\r\n    right: 0;\r\n    top: 0;\r\n    bottom: 0;\r\n    left: 0;\r\n    margin: auto;\r\n    z-index: 1;\r\n    width: 340px;\r\n    display: flex;\r\n    flex-direction: column;\r\n    align-items: center;\r\n    padding: 30px;\r\n    background: white;\r\n    text-align: center;\r\n}\r\ninput[data-v-6648f352] {\r\n    margin-bottom: 10px;\r\n    width: 100%;\r\n    border: none;\r\n    background-color: whitesmoke;\r\n    outline: none !important;\r\n    height: 35px;\r\n    padding-left: 10px;\r\n}\r\n.logwithSP[data-v-6648f352] {\r\n    background: linear-gradient(31deg, rgba(56,89,250,1) 0%, rgba(125,44,249,1) 24%, rgba(205,45,249,1) 52%, rgba(255,166,5,1) 91%);\r\n    border: 0;\r\n    outline: none !important;\r\n    border-radius: 3px;\r\n    height: 35px;\r\n    width: 100%;\r\n    color: white;\r\n    font-weight: bold;\r\n}\r\nbutton[data-v-6648f352] {\r\n    background: linear-gradient(31deg, rgba(56,89,250,1) 35%, rgba(84,5,255,1) 80%);\r\n    border: 0;\r\n    outline: none !important;\r\n    border-radius: 3px;\r\n    height: 35px;\r\n    width: 100%;\r\n    color: white;\r\n    font-weight: bold;\r\n    margin-top: 5px;\r\n}\r\n.orline[data-v-6648f352] {\r\n    padding-top: 10px;\r\n    display: flex;\r\n}\r\n.orline p[data-v-6648f352] {\r\n    margin-left: 5px;\r\n    margin-right: 5px;\r\n}\r\nhr[data-v-6648f352] {\r\n    border: none;\r\n    background-color: rgb(30 30 30);\r\n    color: rgb(163, 163, 163);\r\n    height: 3px;\r\n    width: 116px;\r\n    position: relative;\r\n    top: -5px;\r\n}\r\n.noreg[data-v-6648f352] {\r\n    display: flex;\r\n    flex-direction: column;\r\n}\r\n.noreg p[data-v-6648f352] {\r\n    margin-top: 15px;\r\n    margin-bottom: 0;\r\n}\r\na[data-v-6648f352] {\r\n    text-decoration: none;\r\n    color: rgb(83, 82, 82);\r\n}")
 ;(function(){
 "use strict";
@@ -461,8 +498,8 @@ if (module.hot) {(function () {  var hotAPI = require("vue-hot-reload-api")
     hotAPI.reload("data-v-6648f352", __vue__options__)
   }
 })()}
-},{"vue":20,"vue-hot-reload-api":16,"vueify/lib/insert-css":21}],10:[function(require,module,exports){
-var __vueify_style_dispose__ = require("vueify/lib/insert-css").insert(".uploadpanel[data-v-ea596b9e] {\n    position: relative;\n}")
+},{"vue":21,"vue-hot-reload-api":17,"vueify/lib/insert-css":22}],11:[function(require,module,exports){
+var __vueify_style_dispose__ = require("vueify/lib/insert-css").insert(".uploadpanel[data-v-ea596b9e] {\n    position: relative;\n}\nimg[data-v-ea596b9e] {\n    max-width: 600px;\n}")
 ;(function(){
 "use strict";
 
@@ -520,7 +557,7 @@ if (module.hot) {(function () {  var hotAPI = require("vue-hot-reload-api")
     hotAPI.rerender("data-v-ea596b9e", __vue__options__)
   }
 })()}
-},{"./navigator.vue":7,"./reg.vue":8,"vue":20,"vue-hot-reload-api":16,"vueify/lib/insert-css":21}],11:[function(require,module,exports){
+},{"./navigator.vue":7,"./reg.vue":9,"vue":21,"vue-hot-reload-api":17,"vueify/lib/insert-css":22}],12:[function(require,module,exports){
 const Vue = require("vue"),
       VueResource = require("vue-resource"),
       VueJwtMongo = require("vue-jwt-mongo"),
@@ -556,7 +593,7 @@ let vm = new Vue({
   }
 })
 
-},{"../components/app.vue":4,"../components/feed.vue":5,"../components/index.vue":6,"../components/reg.vue":8,"../components/signin.vue":9,"../components/upload.vue":10,"vue":20,"vue-jwt-mongo":17,"vue-resource":18,"vue-router":19}],12:[function(require,module,exports){
+},{"../components/app.vue":4,"../components/feed.vue":5,"../components/index.vue":6,"../components/reg.vue":9,"../components/signin.vue":10,"../components/upload.vue":11,"vue":21,"vue-jwt-mongo":18,"vue-resource":19,"vue-router":20}],13:[function(require,module,exports){
 /**
  * The code was extracted from:
  * https://github.com/davidchambers/Base64.js
@@ -596,7 +633,7 @@ function polyfill (input) {
 
 module.exports = typeof window !== 'undefined' && window.atob && window.atob.bind(window) || polyfill;
 
-},{}],13:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 var atob = require('./atob');
 
 function b64DecodeUnicode(str) {
@@ -631,7 +668,7 @@ module.exports = function(str) {
   }
 };
 
-},{"./atob":12}],14:[function(require,module,exports){
+},{"./atob":13}],15:[function(require,module,exports){
 'use strict';
 
 var base64_url_decode = require('./base64_url_decode');
@@ -659,7 +696,7 @@ module.exports = function (token,options) {
 
 module.exports.InvalidTokenError = InvalidTokenError;
 
-},{"./base64_url_decode":13}],15:[function(require,module,exports){
+},{"./base64_url_decode":14}],16:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.isPlainObject = exports.clone = exports.recursive = exports.merge = exports.main = void 0;
@@ -744,7 +781,7 @@ function _merge(isClone, isRecursive, items) {
     return result;
 }
 
-},{}],16:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 var Vue // late bind
 var version
 var map = Object.create(null)
@@ -1019,7 +1056,7 @@ function patchScopedSlots (instance) {
   }
 }
 
-},{}],17:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
 'use strict';
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1163,7 +1200,7 @@ function installVuePlugin(Vue, options) {
 module.exports = {
   Client: installVuePlugin
 };
-},{"jwt-decode":14,"merge":15}],18:[function(require,module,exports){
+},{"jwt-decode":15,"merge":16}],19:[function(require,module,exports){
 /*!
  * vue-resource v1.5.1
  * https://github.com/pagekit/vue-resource
@@ -2722,7 +2759,7 @@ if (typeof window !== 'undefined' && window.Vue) {
 
 module.exports = plugin;
 
-},{"got":1}],19:[function(require,module,exports){
+},{"got":1}],20:[function(require,module,exports){
 (function (process){(function (){
 /**
   * vue-router v3.0.1
@@ -5351,7 +5388,7 @@ if (inBrowser && window.Vue) {
 module.exports = VueRouter;
 
 }).call(this)}).call(this,require('_process'))
-},{"_process":2}],20:[function(require,module,exports){
+},{"_process":2}],21:[function(require,module,exports){
 (function (process,global,setImmediate){(function (){
 /*!
  * Vue.js v2.5.16
@@ -13389,7 +13426,7 @@ if (inBrowser) {
 module.exports = Vue;
 
 }).call(this)}).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("timers").setImmediate)
-},{"_process":2,"timers":3}],21:[function(require,module,exports){
+},{"_process":2,"timers":3}],22:[function(require,module,exports){
 var inserted = exports.cache = {}
 
 function noop () {}
@@ -13414,4 +13451,4 @@ exports.insert = function (css) {
   }
 }
 
-},{}]},{},[11]);
+},{}]},{},[12]);

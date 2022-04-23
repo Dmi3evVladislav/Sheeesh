@@ -4,6 +4,9 @@
 
         </navigator>
         <button v-on:click="logout">Выйти</button>
+        <navigator2>
+
+        </navigator2>
     </div>
 </template>
 
@@ -16,7 +19,8 @@
             }
         },
         components: {
-            navigator: require("./navigator.vue")
+            navigator: require("./navigator.vue"),
+            navigator2: require("./navigator2.vue")
         }
     }
 </script>
