@@ -36,6 +36,7 @@
         width: 100%;
         background-color: white;
         box-shadow: 2px black;
+        z-index: 9999;
     }
     img {
         width: 150px;

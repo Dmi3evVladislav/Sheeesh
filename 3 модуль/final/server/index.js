@@ -29,12 +29,18 @@ app.post("/upload", [vjmServer.jwtProtector, upload.single("picture")], function
 app.post("/auth/register", vjmServer.registerHandler);
 app.post("/auth/login", vjmServer.loginHandler)
 app.post("/auth/register", function(request, response){
-    database.db("photofeed").collection("mobiles").insert({
+    database.db("photofeed").collection("users").insert({
         user: request.user.username,
         mobtel: request.auth.mobilenumber,
         date: new Date()
     });
     response.sendStatus(200);
+})
+
+app.get('/feed', vjmServer.jwtProtector, function(request, response) {
+    database.db("photofeed").collection('uploads').find().sort({data: -1}).limit(10).toArray(function(err, documents) {
+        response.json(documents)
+    })
 })
 
 mongoClient.connect(urlMongo, function(err, db) {

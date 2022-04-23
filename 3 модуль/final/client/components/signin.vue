@@ -101,7 +101,7 @@ button {
 }
 hr {
     border: none;
-    background-color: rgb(30 30 30);
+    background-color: rgb(172 172 172);
     color: rgb(163, 163, 163);
     height: 3px;
     width: 116px;

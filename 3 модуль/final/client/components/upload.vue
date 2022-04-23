@@ -52,6 +52,7 @@ const { methods }=require("./reg.vue")
 </script>
 <style scoped>
     .uploadpanel {
+        padding-top: 78px;
         position: relative;
     }
     img {
