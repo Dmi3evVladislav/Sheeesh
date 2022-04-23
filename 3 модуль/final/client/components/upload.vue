@@ -8,7 +8,7 @@
             <form v-on:submit="upload">
                 <input type="file" accept="image/*" name="picture" v-on:change="preview">
                 <button type="submit" class="btn btn-info" v-bind:disabled="!previewd">Загрузить</button>
-                <input type="text" name="disc" v-on:change="preview">
+                <input type="text" name="disc" v-on:change="preview" v-model="discript">
             </form>
         </div>
     </div>
@@ -22,7 +22,7 @@ const { methods }=require("./reg.vue")
             return {
                 picture: "",
                 previewd: false,
-                disc: ""
+                discript: ""
             }
         },
         methods: {
@@ -42,7 +42,8 @@ const { methods }=require("./reg.vue")
                 event.preventDefault();
                 let form = event.target;
                 let formPost = new FormData(form);
-                formPost.append('descr', this.disc)
+                formPost.append('descr', this.discript)
+                console.log(this.discript);
                 this.$http.post("/upload", formPost, {bearer: true}).then(function(){
                     this.$router.push("/feed");
                 })

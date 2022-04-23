@@ -1,4 +1,271 @@
 (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
+
+},{}],2:[function(require,module,exports){
+// shim for using process in browser
+var process = module.exports = {};
+
+// cached from whatever global is present so that test runners that stub it
+// don't break things.  But we need to wrap it in a try catch in case it is
+// wrapped in strict mode code which doesn't define any globals.  It's inside a
+// function because try/catches deoptimize in certain engines.
+
+var cachedSetTimeout;
+var cachedClearTimeout;
+
+function defaultSetTimout() {
+    throw new Error('setTimeout has not been defined');
+}
+function defaultClearTimeout () {
+    throw new Error('clearTimeout has not been defined');
+}
+(function () {
+    try {
+        if (typeof setTimeout === 'function') {
+            cachedSetTimeout = setTimeout;
+        } else {
+            cachedSetTimeout = defaultSetTimout;
+        }
+    } catch (e) {
+        cachedSetTimeout = defaultSetTimout;
+    }
+    try {
+        if (typeof clearTimeout === 'function') {
+            cachedClearTimeout = clearTimeout;
+        } else {
+            cachedClearTimeout = defaultClearTimeout;
+        }
+    } catch (e) {
+        cachedClearTimeout = defaultClearTimeout;
+    }
+} ())
+function runTimeout(fun) {
+    if (cachedSetTimeout === setTimeout) {
+        //normal enviroments in sane situations
+        return setTimeout(fun, 0);
+    }
+    // if setTimeout wasn't available but was latter defined
+    if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
+        cachedSetTimeout = setTimeout;
+        return setTimeout(fun, 0);
+    }
+    try {
+        // when when somebody has screwed with setTimeout but no I.E. maddness
+        return cachedSetTimeout(fun, 0);
+    } catch(e){
+        try {
+            // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
+            return cachedSetTimeout.call(null, fun, 0);
+        } catch(e){
+            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
+            return cachedSetTimeout.call(this, fun, 0);
+        }
+    }
+
+
+}
+function runClearTimeout(marker) {
+    if (cachedClearTimeout === clearTimeout) {
+        //normal enviroments in sane situations
+        return clearTimeout(marker);
+    }
+    // if clearTimeout wasn't available but was latter defined
+    if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
+        cachedClearTimeout = clearTimeout;
+        return clearTimeout(marker);
+    }
+    try {
+        // when when somebody has screwed with setTimeout but no I.E. maddness
+        return cachedClearTimeout(marker);
+    } catch (e){
+        try {
+            // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
+            return cachedClearTimeout.call(null, marker);
+        } catch (e){
+            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
+            // Some versions of I.E. have different rules for clearTimeout vs setTimeout
+            return cachedClearTimeout.call(this, marker);
+        }
+    }
+
+
+
+}
+var queue = [];
+var draining = false;
+var currentQueue;
+var queueIndex = -1;
+
+function cleanUpNextTick() {
+    if (!draining || !currentQueue) {
+        return;
+    }
+    draining = false;
+    if (currentQueue.length) {
+        queue = currentQueue.concat(queue);
+    } else {
+        queueIndex = -1;
+    }
+    if (queue.length) {
+        drainQueue();
+    }
+}
+
+function drainQueue() {
+    if (draining) {
+        return;
+    }
+    var timeout = runTimeout(cleanUpNextTick);
+    draining = true;
+
+    var len = queue.length;
+    while(len) {
+        currentQueue = queue;
+        queue = [];
+        while (++queueIndex < len) {
+            if (currentQueue) {
+                currentQueue[queueIndex].run();
+            }
+        }
+        queueIndex = -1;
+        len = queue.length;
+    }
+    currentQueue = null;
+    draining = false;
+    runClearTimeout(timeout);
+}
+
+process.nextTick = function (fun) {
+    var args = new Array(arguments.length - 1);
+    if (arguments.length > 1) {
+        for (var i = 1; i < arguments.length; i++) {
+            args[i - 1] = arguments[i];
+        }
+    }
+    queue.push(new Item(fun, args));
+    if (queue.length === 1 && !draining) {
+        runTimeout(drainQueue);
+    }
+};
+
+// v8 likes predictible objects
+function Item(fun, array) {
+    this.fun = fun;
+    this.array = array;
+}
+Item.prototype.run = function () {
+    this.fun.apply(null, this.array);
+};
+process.title = 'browser';
+process.browser = true;
+process.env = {};
+process.argv = [];
+process.version = ''; // empty string to avoid regexp issues
+process.versions = {};
+
+function noop() {}
+
+process.on = noop;
+process.addListener = noop;
+process.once = noop;
+process.off = noop;
+process.removeListener = noop;
+process.removeAllListeners = noop;
+process.emit = noop;
+process.prependListener = noop;
+process.prependOnceListener = noop;
+
+process.listeners = function (name) { return [] }
+
+process.binding = function (name) {
+    throw new Error('process.binding is not supported');
+};
+
+process.cwd = function () { return '/' };
+process.chdir = function (dir) {
+    throw new Error('process.chdir is not supported');
+};
+process.umask = function() { return 0; };
+
+},{}],3:[function(require,module,exports){
+(function (setImmediate,clearImmediate){(function (){
+var nextTick = require('process/browser.js').nextTick;
+var apply = Function.prototype.apply;
+var slice = Array.prototype.slice;
+var immediateIds = {};
+var nextImmediateId = 0;
+
+// DOM APIs, for completeness
+
+exports.setTimeout = function() {
+  return new Timeout(apply.call(setTimeout, window, arguments), clearTimeout);
+};
+exports.setInterval = function() {
+  return new Timeout(apply.call(setInterval, window, arguments), clearInterval);
+};
+exports.clearTimeout =
+exports.clearInterval = function(timeout) { timeout.close(); };
+
+function Timeout(id, clearFn) {
+  this._id = id;
+  this._clearFn = clearFn;
+}
+Timeout.prototype.unref = Timeout.prototype.ref = function() {};
+Timeout.prototype.close = function() {
+  this._clearFn.call(window, this._id);
+};
+
+// Does not start the time, just sets up the members needed.
+exports.enroll = function(item, msecs) {
+  clearTimeout(item._idleTimeoutId);
+  item._idleTimeout = msecs;
+};
+
+exports.unenroll = function(item) {
+  clearTimeout(item._idleTimeoutId);
+  item._idleTimeout = -1;
+};
+
+exports._unrefActive = exports.active = function(item) {
+  clearTimeout(item._idleTimeoutId);
+
+  var msecs = item._idleTimeout;
+  if (msecs >= 0) {
+    item._idleTimeoutId = setTimeout(function onTimeout() {
+      if (item._onTimeout)
+        item._onTimeout();
+    }, msecs);
+  }
+};
+
+// That's not how node.js implements it but the exposed api is the same.
+exports.setImmediate = typeof setImmediate === "function" ? setImmediate : function(fn) {
+  var id = nextImmediateId++;
+  var args = arguments.length < 2 ? false : slice.call(arguments, 1);
+
+  immediateIds[id] = true;
+
+  nextTick(function onNextTick() {
+    if (immediateIds[id]) {
+      // fn.call() is faster so we optimize for the common use-case
+      // @see http://jsperf.com/call-apply-segu
+      if (args) {
+        fn.apply(null, args);
+      } else {
+        fn.call(null);
+      }
+      // Prevent ids from leaking
+      exports.clearImmediate(id);
+    }
+  });
+
+  return id;
+};
+
+exports.clearImmediate = typeof clearImmediate === "function" ? clearImmediate : function(id) {
+  delete immediateIds[id];
+};
+}).call(this)}).call(this,require("timers").setImmediate,require("timers").clearImmediate)
+},{"process/browser.js":2,"timers":3}],4:[function(require,module,exports){
 var __vue__options__ = (typeof module.exports === "function"? module.exports.options: module.exports)
 if (__vue__options__.functional) {console.error("[vueify] functional components are not supported and should be defined in plain js files using render functions.")}
 __vue__options__.render = function render () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('router-view')],1)}
@@ -8,13 +275,13 @@ if (module.hot) {(function () {  var hotAPI = require("vue-hot-reload-api")
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-f5e4c5a2", __vue__options__)
+    hotAPI.createRecord("data-v-6f05b921", __vue__options__)
   } else {
-    hotAPI.reload("data-v-f5e4c5a2", __vue__options__)
+    hotAPI.reload("data-v-6f05b921", __vue__options__)
   }
 })()}
-},{"vue":18,"vue-hot-reload-api":14}],2:[function(require,module,exports){
-var __vueify_style_dispose__ = require("vueify/lib/insert-css").insert(".feed[data-v-638b6200] {\n    padding-top: 100px;\n}\n.center[data-v-638b6200] {\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n}\nimg[data-v-638b6200] {\n    width: 350px;\n}\n.panelfeed[data-v-638b6200] {\n    max-height: 600px;\n    height: 50%;\n    background-color: white;\n    padding-bottom: 20px;\n    margin-bottom: 10px;\n    box-shadow: 0px 0px 29px 1px rgba(34, 60, 80, 0.2);\n}\n.panel-heading[data-v-638b6200] {\n    box-shadow: 0px 0px 9px 1px rgba(34, 60, 80, 0.11) inset;\n    height: 50px;\n    display: flex;\n    align-items: center;\n    font-weight: bold;\n}\n.panel-title[data-v-638b6200] {\n    padding-left: 10px;\n}\n.panel-date[data-v-638b6200] {\n    padding-left: 10px;\n    font-weight: bold;\n    color: rgb(153, 153, 153);\n}\n.panel-foter[data-v-638b6200] {\n    padding-top: 5px;\n    font-size: 13px;\n}")
+},{"vue":21,"vue-hot-reload-api":17}],5:[function(require,module,exports){
+var __vueify_style_dispose__ = require("vueify/lib/insert-css").insert(".feed[data-v-2345b14e] {\n    padding-top: 100px;\n}\n.center[data-v-2345b14e] {\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n}\nimg[data-v-2345b14e] {\n    width: 350px;\n}\n.panelfeed[data-v-2345b14e] {\n    max-height: 600px;\n    height: 50%;\n    background-color: white;\n    padding-bottom: 20px;\n    margin-bottom: 10px;\n    box-shadow: 0px 0px 29px 1px rgba(34, 60, 80, 0.2);\n}\n.panel-heading[data-v-2345b14e] {\n    box-shadow: 0px 0px 9px 1px rgba(34, 60, 80, 0.11) inset;\n    height: 50px;\n    display: flex;\n    align-items: center;\n    font-weight: bold;\n}\n.panel-title[data-v-2345b14e] {\n    padding-left: 10px;\n}\n.panel-date[data-v-2345b14e] {\n    padding-left: 10px;\n    font-weight: bold;\n    color: rgb(153, 153, 153);\n}\n.panel-foter[data-v-2345b14e] {\n    padding-top: 5px;\n    font-size: 13px;\n}")
 ;(function(){
 "use strict";
 
@@ -48,19 +315,19 @@ var __vue__options__ = (typeof module.exports === "function"? module.exports.opt
 if (__vue__options__.functional) {console.error("[vueify] functional components are not supported and should be defined in plain js files using render functions.")}
 __vue__options__.render = function render () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('navigator'),_vm._v(" "),_c('div',{staticClass:"feed"},[_c('div',{staticClass:"container"},[_c('div',{staticClass:"row"},[_c('div',{staticClass:"col-md-12 col-xl-12 col-lg-12 col-12 center"},_vm._l((_vm.photos),function(photo,$index){return _c('div',{staticClass:"panelfeed"},[_c('div',{staticClass:"panel-heading"},[_c('div',{staticClass:"headerpost"},[_c('span',{staticClass:"panel-title"},[_vm._v(_vm._s(photo.user))]),_vm._v(" "),_c('span',{staticClass:"gliphicon glificon-user"})])]),_vm._v(" "),_c('div',{staticClass:"panel-body"},[_c('img',{attrs:{"src":_vm.getPic($index)}})]),_vm._v(" "),_c('div',{staticClass:"panel-foter"},[_c('span',{staticClass:"panel-date"},[_vm._v(_vm._s(photo.date.substr(0, 10)))]),_vm._v(" "),_c('span',{staticClass:"panel-date"},[_vm._v(_vm._s(photo.descr))])])])}))])])])],1)}
 __vue__options__.staticRenderFns = []
-__vue__options__._scopeId = "data-v-638b6200"
+__vue__options__._scopeId = "data-v-2345b14e"
 if (module.hot) {(function () {  var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
   if (!hotAPI.compatible) return
   module.hot.accept()
   module.hot.dispose(__vueify_style_dispose__)
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-638b6200", __vue__options__)
+    hotAPI.createRecord("data-v-2345b14e", __vue__options__)
   } else {
-    hotAPI.rerender("data-v-638b6200", __vue__options__)
+    hotAPI.reload("data-v-2345b14e", __vue__options__)
   }
 })()}
-},{"./navigator.vue":4,"./navigator2.vue":5,"vue":18,"vue-hot-reload-api":14,"vueify/lib/insert-css":19}],3:[function(require,module,exports){
+},{"./navigator.vue":7,"./navigator2.vue":8,"vue":21,"vue-hot-reload-api":17,"vueify/lib/insert-css":22}],6:[function(require,module,exports){
 ;(function(){
 "use strict";
 
@@ -85,13 +352,13 @@ if (module.hot) {(function () {  var hotAPI = require("vue-hot-reload-api")
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-2d8825e0", __vue__options__)
+    hotAPI.createRecord("data-v-79e90d52", __vue__options__)
   } else {
-    hotAPI.reload("data-v-2d8825e0", __vue__options__)
+    hotAPI.reload("data-v-79e90d52", __vue__options__)
   }
 })()}
-},{"vue":18,"vue-hot-reload-api":14}],4:[function(require,module,exports){
-var __vueify_style_dispose__ = require("vueify/lib/insert-css").insert(".header[data-v-331b31e5] {\n    padding-bottom: 0px;\n    padding-top: 10px;\n    \n    position: fixed;\n    width: 100%;\n    background-color: white;\n    box-shadow: 2px black;\n    z-index: 9999;\n}\nimg[data-v-331b31e5] {\n    width: 150px;\n}\n.uploadbutt[data-v-331b31e5]{\n    float: right;\n}\n.upload[data-v-331b31e5] {\n    margin-top: 5px;\n    width: 40px;\n}")
+},{"vue":21,"vue-hot-reload-api":17}],7:[function(require,module,exports){
+var __vueify_style_dispose__ = require("vueify/lib/insert-css").insert(".header[data-v-0cf71057] {\n    padding-bottom: 0px;\n    padding-top: 10px;\n    \n    position: fixed;\n    width: 100%;\n    background-color: white;\n    box-shadow: 2px black;\n    z-index: 9999;\n}\nimg[data-v-0cf71057] {\n    width: 150px;\n}\n.uploadbutt[data-v-0cf71057]{\n    float: right;\n}\n.upload[data-v-0cf71057] {\n    margin-top: 5px;\n    width: 40px;\n}")
 ;(function(){
 "use strict";
 
@@ -114,20 +381,20 @@ var __vue__options__ = (typeof module.exports === "function"? module.exports.opt
 if (__vue__options__.functional) {console.error("[vueify] functional components are not supported and should be defined in plain js files using render functions.")}
 __vue__options__.render = function render () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"header"},[_c('div',{staticClass:"container"},[_c('div',{staticClass:"row"},[_c('div',{staticClass:"col-md-12 col-lg-12 col-xl-12 col-12"},[_c('router-link',{staticClass:"navbar-brand",attrs:{"to":"/feed"}},[_c('img',{attrs:{"src":".\\images\\sungram3.png","alt":"logo"}})]),_vm._v(" "),_c('router-link',{staticClass:"navbar-brand uploadbutt",attrs:{"to":"/upload"}},[_c('img',{staticClass:"upload",attrs:{"src":".\\images\\newupload.png","alt":"upload"}})]),_vm._v(" "),_c('a',{attrs:{"href":"#"},on:{"click":_vm.logout}},[_vm._v("Выйти")])],1)])])])}
 __vue__options__.staticRenderFns = []
-__vue__options__._scopeId = "data-v-331b31e5"
+__vue__options__._scopeId = "data-v-0cf71057"
 if (module.hot) {(function () {  var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
   if (!hotAPI.compatible) return
   module.hot.accept()
   module.hot.dispose(__vueify_style_dispose__)
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-331b31e5", __vue__options__)
+    hotAPI.createRecord("data-v-0cf71057", __vue__options__)
   } else {
-    hotAPI.reload("data-v-331b31e5", __vue__options__)
+    hotAPI.reload("data-v-0cf71057", __vue__options__)
   }
 })()}
-},{"vue":18,"vue-hot-reload-api":14,"vueify/lib/insert-css":19}],5:[function(require,module,exports){
-var __vueify_style_dispose__ = require("vueify/lib/insert-css").insert(".boter[data-v-3062b41d] {\n    padding-bottom: 0px;\n    padding-top: 1px;\n    position: fixed;\n    width: 100%;\n    bottom: 0;\n    background-color: white;\n    box-shadow: 2px black;\n}\n.navbar-brand[data-v-3062b41d]{\n    display: flex;\n    justify-content: center;\n    align-items: center;\n}\nimg[data-v-3062b41d] {\n    width: 50px;\n}")
+},{"vue":21,"vue-hot-reload-api":17,"vueify/lib/insert-css":22}],8:[function(require,module,exports){
+var __vueify_style_dispose__ = require("vueify/lib/insert-css").insert(".boter[data-v-dbfab82a] {\n    padding-bottom: 0px;\n    padding-top: 1px;\n    position: fixed;\n    width: 100%;\n    bottom: 0;\n    background-color: white;\n    box-shadow: 2px black;\n}\n.navbar-brand[data-v-dbfab82a]{\n    display: flex;\n    justify-content: center;\n    align-items: center;\n}\nimg[data-v-dbfab82a] {\n    width: 50px;\n}")
 ;(function(){
 "use strict";
 
@@ -150,20 +417,20 @@ var __vue__options__ = (typeof module.exports === "function"? module.exports.opt
 if (__vue__options__.functional) {console.error("[vueify] functional components are not supported and should be defined in plain js files using render functions.")}
 __vue__options__.render = function render () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"boter"},[_c('div',{staticClass:"container"},[_c('div',{staticClass:"row"},[_c('div',{staticClass:"col-md-12 col-lg-12 col-xl-12 col-12"},[_c('router-link',{staticClass:"navbar-brand",attrs:{"to":"/upload"}},[_c('img',{attrs:{"src":".\\images\\newupload.png","alt":"upload"}})])],1)])])])}
 __vue__options__.staticRenderFns = []
-__vue__options__._scopeId = "data-v-3062b41d"
+__vue__options__._scopeId = "data-v-dbfab82a"
 if (module.hot) {(function () {  var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
   if (!hotAPI.compatible) return
   module.hot.accept()
   module.hot.dispose(__vueify_style_dispose__)
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-3062b41d", __vue__options__)
+    hotAPI.createRecord("data-v-dbfab82a", __vue__options__)
   } else {
-    hotAPI.reload("data-v-3062b41d", __vue__options__)
+    hotAPI.reload("data-v-dbfab82a", __vue__options__)
   }
 })()}
-},{"vue":18,"vue-hot-reload-api":14,"vueify/lib/insert-css":19}],6:[function(require,module,exports){
-var __vueify_style_dispose__ = require("vueify/lib/insert-css").insert(".regpage[data-v-15d92bbc]{\r\n    width: 100%;\r\n}\r\nimg[data-v-15d92bbc] {\r\n    width: 175px;\r\n}\r\nform[data-v-15d92bbc] {\r\n    font-weight: bold;\r\n    color: rgb(163, 163, 163);\r\n    border: 1px solid rgb(223, 222, 222);\r\n    position: absolute;\r\n    height: 592px;\r\n    right: 0;\r\n    top: 0;\r\n    bottom: 0;\r\n    left: 0;\r\n    margin: auto;\r\n    z-index: 1;\r\n    width: 340px;\r\n    display: flex;\r\n    flex-direction: column;\r\n    align-items: center;\r\n    padding: 30px;\r\n    background: white;\r\n    text-align: center;\r\n}\r\ninput[data-v-15d92bbc] {\r\n    margin-bottom: 10px;\r\n    width: 100%;\r\n    border: none;\r\n    background-color: whitesmoke;\r\n    outline: none !important;\r\n    height: 35px;\r\n    padding-left: 10px;\r\n}\r\n.logwithSP[data-v-15d92bbc] {\r\n    background: linear-gradient(31deg, rgba(56,89,250,1) 0%, rgba(125,44,249,1) 24%, rgba(205,45,249,1) 52%, rgba(255,166,5,1) 91%);\r\n    border: 0;\r\n    outline: none !important;\r\n    border-radius: 3px;\r\n    height: 35px;\r\n    width: 100%;\r\n    color: white;\r\n    font-weight: bold;\r\n}\r\nbutton[data-v-15d92bbc] {\r\n    background: linear-gradient(31deg, rgba(56,89,250,1) 35%, rgba(84,5,255,1) 80%);\r\n    border: 0;\r\n    outline: none !important;\r\n    border-radius: 3px;\r\n    height: 35px;\r\n    width: 100%;\r\n    color: white;\r\n    font-weight: bold;\r\n    margin-top: 5px;\r\n}\r\n.orline[data-v-15d92bbc] {\r\n    padding-top: 10px;\r\n    display: flex;\r\n}\r\n.orline p[data-v-15d92bbc] {\r\n    margin-left: 5px;\r\n    margin-right: 5px;\r\n}\r\nhr[data-v-15d92bbc] {\r\n    border: none;\r\n    background-color: rgb(172 172 172);\r\n    color: rgb(163, 163, 163);\r\n    height: 3px;\r\n    width: 116px;\r\n    position: relative;\r\n    top: -5px;\r\n}\r\n.noreg[data-v-15d92bbc] {\r\n    display: flex;\r\n    flex-direction: column;\r\n}\r\n.noreg p[data-v-15d92bbc] {\r\n    margin-top: 15px;\r\n    margin-bottom: 0;\r\n}\r\na[data-v-15d92bbc] {\r\n    text-decoration: none;\r\n    color: rgb(83, 82, 82);\r\n}")
+},{"vue":21,"vue-hot-reload-api":17,"vueify/lib/insert-css":22}],9:[function(require,module,exports){
+var __vueify_style_dispose__ = require("vueify/lib/insert-css").insert(".regpage[data-v-41e8f3d8]{\r\n    width: 100%;\r\n}\r\nimg[data-v-41e8f3d8] {\r\n    width: 175px;\r\n}\r\nform[data-v-41e8f3d8] {\r\n    font-weight: bold;\r\n    color: rgb(163, 163, 163);\r\n    border: 1px solid rgb(223, 222, 222);\r\n    position: absolute;\r\n    height: 592px;\r\n    right: 0;\r\n    top: 0;\r\n    bottom: 0;\r\n    left: 0;\r\n    margin: auto;\r\n    z-index: 1;\r\n    width: 340px;\r\n    display: flex;\r\n    flex-direction: column;\r\n    align-items: center;\r\n    padding: 30px;\r\n    background: white;\r\n    text-align: center;\r\n}\r\ninput[data-v-41e8f3d8] {\r\n    margin-bottom: 10px;\r\n    width: 100%;\r\n    border: none;\r\n    background-color: whitesmoke;\r\n    outline: none !important;\r\n    height: 35px;\r\n    padding-left: 10px;\r\n}\r\n.logwithSP[data-v-41e8f3d8] {\r\n    background: linear-gradient(31deg, rgba(56,89,250,1) 0%, rgba(125,44,249,1) 24%, rgba(205,45,249,1) 52%, rgba(255,166,5,1) 91%);\r\n    border: 0;\r\n    outline: none !important;\r\n    border-radius: 3px;\r\n    height: 35px;\r\n    width: 100%;\r\n    color: white;\r\n    font-weight: bold;\r\n}\r\nbutton[data-v-41e8f3d8] {\r\n    background: linear-gradient(31deg, rgba(56,89,250,1) 35%, rgba(84,5,255,1) 80%);\r\n    border: 0;\r\n    outline: none !important;\r\n    border-radius: 3px;\r\n    height: 35px;\r\n    width: 100%;\r\n    color: white;\r\n    font-weight: bold;\r\n    margin-top: 5px;\r\n}\r\n.orline[data-v-41e8f3d8] {\r\n    padding-top: 10px;\r\n    display: flex;\r\n}\r\n.orline p[data-v-41e8f3d8] {\r\n    margin-left: 5px;\r\n    margin-right: 5px;\r\n}\r\nhr[data-v-41e8f3d8] {\r\n    border: none;\r\n    background-color: rgb(172 172 172);\r\n    color: rgb(163, 163, 163);\r\n    height: 3px;\r\n    width: 116px;\r\n    position: relative;\r\n    top: -5px;\r\n}\r\n.noreg[data-v-41e8f3d8] {\r\n    display: flex;\r\n    flex-direction: column;\r\n}\r\n.noreg p[data-v-41e8f3d8] {\r\n    margin-top: 15px;\r\n    margin-bottom: 0;\r\n}\r\na[data-v-41e8f3d8] {\r\n    text-decoration: none;\r\n    color: rgb(83, 82, 82);\r\n}")
 ;(function(){
 "use strict";
 
@@ -193,20 +460,20 @@ var __vue__options__ = (typeof module.exports === "function"? module.exports.opt
 if (__vue__options__.functional) {console.error("[vueify] functional components are not supported and should be defined in plain js files using render functions.")}
 __vue__options__.render = function render () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{attrs:{"id":"regpage"}},[_c('form',{on:{"keydown":function($event){if(!('button' in $event)&&_vm._k($event.keyCode,"enter",13,$event.key,"Enter")){ return null; }return _vm.registration($event)}}},[_c('img',{attrs:{"src":".\\images\\sungram1.png","alt":"logo"}}),_vm._v(" "),_c('p',[_vm._v("Зарегистририруйтесь, чтобы смотреть и выкладывать фото ваших друзей и не только")]),_vm._v(" "),_c('button',{staticClass:"logwithSP"},[_vm._v("Войти через SunProject")]),_vm._v(" "),_vm._m(0),_vm._v(" "),_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.login),expression:"login"}],attrs:{"type":"text","placeholder":"Логин"},domProps:{"value":(_vm.login)},on:{"input":function($event){if($event.target.composing){ return; }_vm.login=$event.target.value}}}),_vm._v(" "),_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.mobilenumber),expression:"mobilenumber"}],attrs:{"type":"tel","placeholder":"Номер телефона"},domProps:{"value":(_vm.mobilenumber)},on:{"input":function($event){if($event.target.composing){ return; }_vm.mobilenumber=$event.target.value}}}),_vm._v(" "),_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.password),expression:"password"}],attrs:{"type":"password","placeholder":"Придумайте пароль"},domProps:{"value":(_vm.password)},on:{"input":function($event){if($event.target.composing){ return; }_vm.password=$event.target.value}}}),_vm._v(" "),_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.passwordRepeat),expression:"passwordRepeat"}],attrs:{"type":"password","placeholder":"Повторите пароль"},domProps:{"value":(_vm.passwordRepeat)},on:{"input":function($event){if($event.target.composing){ return; }_vm.passwordRepeat=$event.target.value}}}),_vm._v(" "),_c('button',{on:{"click":_vm.registration}},[_vm._v("Зарегистрироваться")]),_vm._v(" "),_c('div',{staticClass:"noreg"},[_c('p',[_vm._v("У вас уже есть аккаунт? ")]),_c('router-link',{staticClass:"logbut",attrs:{"to":"/login"}},[_vm._v("Войти")])],1)])])}
 __vue__options__.staticRenderFns = [function render () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"orline"},[_c('hr'),_c('p',[_vm._v("ИЛИ")]),_c('hr')])}]
-__vue__options__._scopeId = "data-v-15d92bbc"
+__vue__options__._scopeId = "data-v-41e8f3d8"
 if (module.hot) {(function () {  var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
   if (!hotAPI.compatible) return
   module.hot.accept()
   module.hot.dispose(__vueify_style_dispose__)
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-15d92bbc", __vue__options__)
+    hotAPI.createRecord("data-v-41e8f3d8", __vue__options__)
   } else {
-    hotAPI.reload("data-v-15d92bbc", __vue__options__)
+    hotAPI.reload("data-v-41e8f3d8", __vue__options__)
   }
 })()}
-},{"vue":18,"vue-hot-reload-api":14,"vueify/lib/insert-css":19}],7:[function(require,module,exports){
-var __vueify_style_dispose__ = require("vueify/lib/insert-css").insert(".logpage[data-v-268cec84]{\r\n    width: 100%;\r\n}\r\nimg[data-v-268cec84] {\r\n    width: 175px;\r\n}\r\nform[data-v-268cec84] {\r\n    font-weight: bold;\r\n    color: rgb(163, 163, 163);\r\n    border: 1px solid rgb(223, 222, 222);\r\n    position: absolute;\r\n    height: 500px;\r\n    right: 0;\r\n    top: 0;\r\n    bottom: 0;\r\n    left: 0;\r\n    margin: auto;\r\n    z-index: 1;\r\n    width: 340px;\r\n    display: flex;\r\n    flex-direction: column;\r\n    align-items: center;\r\n    padding: 30px;\r\n    background: white;\r\n    text-align: center;\r\n}\r\ninput[data-v-268cec84] {\r\n    margin-bottom: 10px;\r\n    width: 100%;\r\n    border: none;\r\n    background-color: whitesmoke;\r\n    outline: none !important;\r\n    height: 35px;\r\n    padding-left: 10px;\r\n}\r\n.logwithSP[data-v-268cec84] {\r\n    background: linear-gradient(31deg, rgba(56,89,250,1) 0%, rgba(125,44,249,1) 24%, rgba(205,45,249,1) 52%, rgba(255,166,5,1) 91%);\r\n    border: 0;\r\n    outline: none !important;\r\n    border-radius: 3px;\r\n    height: 35px;\r\n    width: 100%;\r\n    color: white;\r\n    font-weight: bold;\r\n}\r\nbutton[data-v-268cec84] {\r\n    background: linear-gradient(31deg, rgba(56,89,250,1) 35%, rgba(84,5,255,1) 80%);\r\n    border: 0;\r\n    outline: none !important;\r\n    border-radius: 3px;\r\n    height: 35px;\r\n    width: 100%;\r\n    color: white;\r\n    font-weight: bold;\r\n    margin-top: 5px;\r\n}\r\n.orline[data-v-268cec84] {\r\n    padding-top: 10px;\r\n    display: flex;\r\n}\r\n.orline p[data-v-268cec84] {\r\n    margin-left: 5px;\r\n    margin-right: 5px;\r\n}\r\nhr[data-v-268cec84] {\r\n    border: none;\r\n    background-color: rgb(172 172 172);\r\n    color: rgb(163, 163, 163);\r\n    height: 3px;\r\n    width: 116px;\r\n    position: relative;\r\n    top: -5px;\r\n}\r\n.noreg[data-v-268cec84] {\r\n    display: flex;\r\n    flex-direction: column;\r\n}\r\n.noreg p[data-v-268cec84] {\r\n    margin-top: 15px;\r\n    margin-bottom: 0;\r\n}\r\na[data-v-268cec84] {\r\n    text-decoration: none;\r\n    color: rgb(83, 82, 82);\r\n}")
+},{"vue":21,"vue-hot-reload-api":17,"vueify/lib/insert-css":22}],10:[function(require,module,exports){
+var __vueify_style_dispose__ = require("vueify/lib/insert-css").insert(".logpage[data-v-6648f352]{\r\n    width: 100%;\r\n}\r\nimg[data-v-6648f352] {\r\n    width: 175px;\r\n}\r\nform[data-v-6648f352] {\r\n    font-weight: bold;\r\n    color: rgb(163, 163, 163);\r\n    border: 1px solid rgb(223, 222, 222);\r\n    position: absolute;\r\n    height: 500px;\r\n    right: 0;\r\n    top: 0;\r\n    bottom: 0;\r\n    left: 0;\r\n    margin: auto;\r\n    z-index: 1;\r\n    width: 340px;\r\n    display: flex;\r\n    flex-direction: column;\r\n    align-items: center;\r\n    padding: 30px;\r\n    background: white;\r\n    text-align: center;\r\n}\r\ninput[data-v-6648f352] {\r\n    margin-bottom: 10px;\r\n    width: 100%;\r\n    border: none;\r\n    background-color: whitesmoke;\r\n    outline: none !important;\r\n    height: 35px;\r\n    padding-left: 10px;\r\n}\r\n.logwithSP[data-v-6648f352] {\r\n    background: linear-gradient(31deg, rgba(56,89,250,1) 0%, rgba(125,44,249,1) 24%, rgba(205,45,249,1) 52%, rgba(255,166,5,1) 91%);\r\n    border: 0;\r\n    outline: none !important;\r\n    border-radius: 3px;\r\n    height: 35px;\r\n    width: 100%;\r\n    color: white;\r\n    font-weight: bold;\r\n}\r\nbutton[data-v-6648f352] {\r\n    background: linear-gradient(31deg, rgba(56,89,250,1) 35%, rgba(84,5,255,1) 80%);\r\n    border: 0;\r\n    outline: none !important;\r\n    border-radius: 3px;\r\n    height: 35px;\r\n    width: 100%;\r\n    color: white;\r\n    font-weight: bold;\r\n    margin-top: 5px;\r\n}\r\n.orline[data-v-6648f352] {\r\n    padding-top: 10px;\r\n    display: flex;\r\n}\r\n.orline p[data-v-6648f352] {\r\n    margin-left: 5px;\r\n    margin-right: 5px;\r\n}\r\nhr[data-v-6648f352] {\r\n    border: none;\r\n    background-color: rgb(172 172 172);\r\n    color: rgb(163, 163, 163);\r\n    height: 3px;\r\n    width: 116px;\r\n    position: relative;\r\n    top: -5px;\r\n}\r\n.noreg[data-v-6648f352] {\r\n    display: flex;\r\n    flex-direction: column;\r\n}\r\n.noreg p[data-v-6648f352] {\r\n    margin-top: 15px;\r\n    margin-bottom: 0;\r\n}\r\na[data-v-6648f352] {\r\n    text-decoration: none;\r\n    color: rgb(83, 82, 82);\r\n}")
 ;(function(){
 "use strict";
 
@@ -233,20 +500,20 @@ var __vue__options__ = (typeof module.exports === "function"? module.exports.opt
 if (__vue__options__.functional) {console.error("[vueify] functional components are not supported and should be defined in plain js files using render functions.")}
 __vue__options__.render = function render () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"logpage"},[_c('form',{on:{"keydown":function($event){if(!('button' in $event)&&_vm._k($event.keyCode,"enter",13,$event.key,"Enter")){ return null; }return _vm.signin($event)}}},[_c('img',{attrs:{"src":".\\images\\sungram1.png","alt":"logo"}}),_vm._v(" "),_c('p',[_vm._v("Войдите, чтобы смотреть и выкладывать фото ваших друзей и не только")]),_vm._v(" "),_c('button',{staticClass:"logwithSP"},[_vm._v("Войти через SunProject")]),_vm._v(" "),_vm._m(0),_vm._v(" "),_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.login),expression:"login"}],attrs:{"type":"text","placeholder":"Логин"},domProps:{"value":(_vm.login)},on:{"input":function($event){if($event.target.composing){ return; }_vm.login=$event.target.value}}}),_vm._v(" "),_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.password),expression:"password"}],attrs:{"type":"password","placeholder":"Пароль"},domProps:{"value":(_vm.password)},on:{"input":function($event){if($event.target.composing){ return; }_vm.password=$event.target.value}}}),_vm._v(" "),_c('button',{on:{"click":_vm.signin}},[_vm._v("Войти")]),_vm._v(" "),_c('div',{staticClass:"noreg"},[_c('p',[_vm._v("У вас ещё нет аккаунта? ")]),_c('router-link',{staticClass:"regbut",attrs:{"to":"/register"}},[_vm._v("Зарегестрируйтесь")])],1)])])}
 __vue__options__.staticRenderFns = [function render () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"orline"},[_c('hr'),_c('p',[_vm._v("ИЛИ")]),_c('hr')])}]
-__vue__options__._scopeId = "data-v-268cec84"
+__vue__options__._scopeId = "data-v-6648f352"
 if (module.hot) {(function () {  var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
   if (!hotAPI.compatible) return
   module.hot.accept()
   module.hot.dispose(__vueify_style_dispose__)
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-268cec84", __vue__options__)
+    hotAPI.createRecord("data-v-6648f352", __vue__options__)
   } else {
-    hotAPI.reload("data-v-268cec84", __vue__options__)
+    hotAPI.reload("data-v-6648f352", __vue__options__)
   }
 })()}
-},{"vue":18,"vue-hot-reload-api":14,"vueify/lib/insert-css":19}],8:[function(require,module,exports){
-var __vueify_style_dispose__ = require("vueify/lib/insert-css").insert(".uploadpanel[data-v-4b174363] {\n    padding-top: 78px;\n    position: relative;\n}\nimg[data-v-4b174363] {\n    max-width: 600px;\n}")
+},{"vue":21,"vue-hot-reload-api":17,"vueify/lib/insert-css":22}],11:[function(require,module,exports){
+var __vueify_style_dispose__ = require("vueify/lib/insert-css").insert(".uploadpanel[data-v-ea596b9e] {\n    padding-top: 78px;\n    position: relative;\n}\nimg[data-v-ea596b9e] {\n    max-width: 600px;\n}")
 ;(function(){
 "use strict";
 
@@ -258,7 +525,7 @@ module.exports = {
         return {
             picture: "",
             previewd: false,
-            disc: ""
+            discript: ""
         };
     },
     methods: {
@@ -278,7 +545,8 @@ module.exports = {
             event.preventDefault();
             var form = event.target;
             var formPost = new FormData(form);
-            formPost.append('descr', this.disc);
+            formPost.append('descr', this.discript);
+            console.log(this.discript);
             this.$http.post("/upload", formPost, { bearer: true }).then(function () {
                 this.$router.push("/feed");
             });
@@ -292,21 +560,21 @@ module.exports = {
 if (module.exports.__esModule) module.exports = module.exports.default
 var __vue__options__ = (typeof module.exports === "function"? module.exports.options: module.exports)
 if (__vue__options__.functional) {console.error("[vueify] functional components are not supported and should be defined in plain js files using render functions.")}
-__vue__options__.render = function render () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('navigator'),_vm._v(" "),_c('div',{staticClass:"uploadpanel"},[(_vm.previewd)?_c('img',{attrs:{"src":_vm.image}}):_vm._e(),_vm._v(" "),_c('form',{on:{"submit":_vm.upload}},[_c('input',{attrs:{"type":"file","accept":"image/*","name":"picture"},on:{"change":_vm.preview}}),_vm._v(" "),_c('button',{staticClass:"btn btn-info",attrs:{"type":"submit","disabled":!_vm.previewd}},[_vm._v("Загрузить")]),_vm._v(" "),_c('input',{attrs:{"type":"text","name":"disc"},on:{"change":_vm.preview}})])])],1)}
+__vue__options__.render = function render () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('navigator'),_vm._v(" "),_c('div',{staticClass:"uploadpanel"},[(_vm.previewd)?_c('img',{attrs:{"src":_vm.image}}):_vm._e(),_vm._v(" "),_c('form',{on:{"submit":_vm.upload}},[_c('input',{attrs:{"type":"file","accept":"image/*","name":"picture"},on:{"change":_vm.preview}}),_vm._v(" "),_c('button',{staticClass:"btn btn-info",attrs:{"type":"submit","disabled":!_vm.previewd}},[_vm._v("Загрузить")]),_vm._v(" "),_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.discript),expression:"discript"}],attrs:{"type":"text","name":"disc"},domProps:{"value":(_vm.discript)},on:{"change":_vm.preview,"input":function($event){if($event.target.composing){ return; }_vm.discript=$event.target.value}}})])])],1)}
 __vue__options__.staticRenderFns = []
-__vue__options__._scopeId = "data-v-4b174363"
+__vue__options__._scopeId = "data-v-ea596b9e"
 if (module.hot) {(function () {  var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
   if (!hotAPI.compatible) return
   module.hot.accept()
   module.hot.dispose(__vueify_style_dispose__)
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-4b174363", __vue__options__)
+    hotAPI.createRecord("data-v-ea596b9e", __vue__options__)
   } else {
-    hotAPI.reload("data-v-4b174363", __vue__options__)
+    hotAPI.reload("data-v-ea596b9e", __vue__options__)
   }
 })()}
-},{"./navigator.vue":4,"./reg.vue":6,"vue":18,"vue-hot-reload-api":14,"vueify/lib/insert-css":19}],9:[function(require,module,exports){
+},{"./navigator.vue":7,"./reg.vue":9,"vue":21,"vue-hot-reload-api":17,"vueify/lib/insert-css":22}],12:[function(require,module,exports){
 const Vue = require("vue"),
       VueResource = require("vue-resource"),
       VueJwtMongo = require("vue-jwt-mongo"),
@@ -342,7 +610,7 @@ let vm = new Vue({
   }
 })
 
-},{"../components/app.vue":1,"../components/feed.vue":2,"../components/index.vue":3,"../components/reg.vue":6,"../components/signin.vue":7,"../components/upload.vue":8,"vue":18,"vue-jwt-mongo":15,"vue-resource":16,"vue-router":17}],10:[function(require,module,exports){
+},{"../components/app.vue":4,"../components/feed.vue":5,"../components/index.vue":6,"../components/reg.vue":9,"../components/signin.vue":10,"../components/upload.vue":11,"vue":21,"vue-jwt-mongo":18,"vue-resource":19,"vue-router":20}],13:[function(require,module,exports){
 /**
  * The code was extracted from:
  * https://github.com/davidchambers/Base64.js
@@ -382,7 +650,7 @@ function polyfill (input) {
 
 module.exports = typeof window !== 'undefined' && window.atob && window.atob.bind(window) || polyfill;
 
-},{}],11:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 var atob = require('./atob');
 
 function b64DecodeUnicode(str) {
@@ -417,7 +685,7 @@ module.exports = function(str) {
   }
 };
 
-},{"./atob":10}],12:[function(require,module,exports){
+},{"./atob":13}],15:[function(require,module,exports){
 'use strict';
 
 var base64_url_decode = require('./base64_url_decode');
@@ -445,7 +713,7 @@ module.exports = function (token,options) {
 
 module.exports.InvalidTokenError = InvalidTokenError;
 
-},{"./base64_url_decode":11}],13:[function(require,module,exports){
+},{"./base64_url_decode":14}],16:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.isPlainObject = exports.clone = exports.recursive = exports.merge = exports.main = void 0;
@@ -530,7 +798,7 @@ function _merge(isClone, isRecursive, items) {
     return result;
 }
 
-},{}],14:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 var Vue // late bind
 var version
 var map = Object.create(null)
@@ -805,7 +1073,7 @@ function patchScopedSlots (instance) {
   }
 }
 
-},{}],15:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
 'use strict';
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -949,7 +1217,7 @@ function installVuePlugin(Vue, options) {
 module.exports = {
   Client: installVuePlugin
 };
-},{"jwt-decode":12,"merge":13}],16:[function(require,module,exports){
+},{"jwt-decode":15,"merge":16}],19:[function(require,module,exports){
 /*!
  * vue-resource v1.5.1
  * https://github.com/pagekit/vue-resource
@@ -2508,7 +2776,7 @@ if (typeof window !== 'undefined' && window.Vue) {
 
 module.exports = plugin;
 
-},{"got":20}],17:[function(require,module,exports){
+},{"got":1}],20:[function(require,module,exports){
 (function (process){(function (){
 /**
   * vue-router v3.0.1
@@ -5137,7 +5405,7 @@ if (inBrowser && window.Vue) {
 module.exports = VueRouter;
 
 }).call(this)}).call(this,require('_process'))
-},{"_process":21}],18:[function(require,module,exports){
+},{"_process":2}],21:[function(require,module,exports){
 (function (process,global,setImmediate){(function (){
 /*!
  * Vue.js v2.5.16
@@ -13175,7 +13443,7 @@ if (inBrowser) {
 module.exports = Vue;
 
 }).call(this)}).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("timers").setImmediate)
-},{"_process":21,"timers":22}],19:[function(require,module,exports){
+},{"_process":2,"timers":3}],22:[function(require,module,exports){
 var inserted = exports.cache = {}
 
 function noop () {}
@@ -13200,271 +13468,4 @@ exports.insert = function (css) {
   }
 }
 
-},{}],20:[function(require,module,exports){
-
-},{}],21:[function(require,module,exports){
-// shim for using process in browser
-var process = module.exports = {};
-
-// cached from whatever global is present so that test runners that stub it
-// don't break things.  But we need to wrap it in a try catch in case it is
-// wrapped in strict mode code which doesn't define any globals.  It's inside a
-// function because try/catches deoptimize in certain engines.
-
-var cachedSetTimeout;
-var cachedClearTimeout;
-
-function defaultSetTimout() {
-    throw new Error('setTimeout has not been defined');
-}
-function defaultClearTimeout () {
-    throw new Error('clearTimeout has not been defined');
-}
-(function () {
-    try {
-        if (typeof setTimeout === 'function') {
-            cachedSetTimeout = setTimeout;
-        } else {
-            cachedSetTimeout = defaultSetTimout;
-        }
-    } catch (e) {
-        cachedSetTimeout = defaultSetTimout;
-    }
-    try {
-        if (typeof clearTimeout === 'function') {
-            cachedClearTimeout = clearTimeout;
-        } else {
-            cachedClearTimeout = defaultClearTimeout;
-        }
-    } catch (e) {
-        cachedClearTimeout = defaultClearTimeout;
-    }
-} ())
-function runTimeout(fun) {
-    if (cachedSetTimeout === setTimeout) {
-        //normal enviroments in sane situations
-        return setTimeout(fun, 0);
-    }
-    // if setTimeout wasn't available but was latter defined
-    if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
-        cachedSetTimeout = setTimeout;
-        return setTimeout(fun, 0);
-    }
-    try {
-        // when when somebody has screwed with setTimeout but no I.E. maddness
-        return cachedSetTimeout(fun, 0);
-    } catch(e){
-        try {
-            // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
-            return cachedSetTimeout.call(null, fun, 0);
-        } catch(e){
-            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
-            return cachedSetTimeout.call(this, fun, 0);
-        }
-    }
-
-
-}
-function runClearTimeout(marker) {
-    if (cachedClearTimeout === clearTimeout) {
-        //normal enviroments in sane situations
-        return clearTimeout(marker);
-    }
-    // if clearTimeout wasn't available but was latter defined
-    if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
-        cachedClearTimeout = clearTimeout;
-        return clearTimeout(marker);
-    }
-    try {
-        // when when somebody has screwed with setTimeout but no I.E. maddness
-        return cachedClearTimeout(marker);
-    } catch (e){
-        try {
-            // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
-            return cachedClearTimeout.call(null, marker);
-        } catch (e){
-            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
-            // Some versions of I.E. have different rules for clearTimeout vs setTimeout
-            return cachedClearTimeout.call(this, marker);
-        }
-    }
-
-
-
-}
-var queue = [];
-var draining = false;
-var currentQueue;
-var queueIndex = -1;
-
-function cleanUpNextTick() {
-    if (!draining || !currentQueue) {
-        return;
-    }
-    draining = false;
-    if (currentQueue.length) {
-        queue = currentQueue.concat(queue);
-    } else {
-        queueIndex = -1;
-    }
-    if (queue.length) {
-        drainQueue();
-    }
-}
-
-function drainQueue() {
-    if (draining) {
-        return;
-    }
-    var timeout = runTimeout(cleanUpNextTick);
-    draining = true;
-
-    var len = queue.length;
-    while(len) {
-        currentQueue = queue;
-        queue = [];
-        while (++queueIndex < len) {
-            if (currentQueue) {
-                currentQueue[queueIndex].run();
-            }
-        }
-        queueIndex = -1;
-        len = queue.length;
-    }
-    currentQueue = null;
-    draining = false;
-    runClearTimeout(timeout);
-}
-
-process.nextTick = function (fun) {
-    var args = new Array(arguments.length - 1);
-    if (arguments.length > 1) {
-        for (var i = 1; i < arguments.length; i++) {
-            args[i - 1] = arguments[i];
-        }
-    }
-    queue.push(new Item(fun, args));
-    if (queue.length === 1 && !draining) {
-        runTimeout(drainQueue);
-    }
-};
-
-// v8 likes predictible objects
-function Item(fun, array) {
-    this.fun = fun;
-    this.array = array;
-}
-Item.prototype.run = function () {
-    this.fun.apply(null, this.array);
-};
-process.title = 'browser';
-process.browser = true;
-process.env = {};
-process.argv = [];
-process.version = ''; // empty string to avoid regexp issues
-process.versions = {};
-
-function noop() {}
-
-process.on = noop;
-process.addListener = noop;
-process.once = noop;
-process.off = noop;
-process.removeListener = noop;
-process.removeAllListeners = noop;
-process.emit = noop;
-process.prependListener = noop;
-process.prependOnceListener = noop;
-
-process.listeners = function (name) { return [] }
-
-process.binding = function (name) {
-    throw new Error('process.binding is not supported');
-};
-
-process.cwd = function () { return '/' };
-process.chdir = function (dir) {
-    throw new Error('process.chdir is not supported');
-};
-process.umask = function() { return 0; };
-
-},{}],22:[function(require,module,exports){
-(function (setImmediate,clearImmediate){(function (){
-var nextTick = require('process/browser.js').nextTick;
-var apply = Function.prototype.apply;
-var slice = Array.prototype.slice;
-var immediateIds = {};
-var nextImmediateId = 0;
-
-// DOM APIs, for completeness
-
-exports.setTimeout = function() {
-  return new Timeout(apply.call(setTimeout, window, arguments), clearTimeout);
-};
-exports.setInterval = function() {
-  return new Timeout(apply.call(setInterval, window, arguments), clearInterval);
-};
-exports.clearTimeout =
-exports.clearInterval = function(timeout) { timeout.close(); };
-
-function Timeout(id, clearFn) {
-  this._id = id;
-  this._clearFn = clearFn;
-}
-Timeout.prototype.unref = Timeout.prototype.ref = function() {};
-Timeout.prototype.close = function() {
-  this._clearFn.call(window, this._id);
-};
-
-// Does not start the time, just sets up the members needed.
-exports.enroll = function(item, msecs) {
-  clearTimeout(item._idleTimeoutId);
-  item._idleTimeout = msecs;
-};
-
-exports.unenroll = function(item) {
-  clearTimeout(item._idleTimeoutId);
-  item._idleTimeout = -1;
-};
-
-exports._unrefActive = exports.active = function(item) {
-  clearTimeout(item._idleTimeoutId);
-
-  var msecs = item._idleTimeout;
-  if (msecs >= 0) {
-    item._idleTimeoutId = setTimeout(function onTimeout() {
-      if (item._onTimeout)
-        item._onTimeout();
-    }, msecs);
-  }
-};
-
-// That's not how node.js implements it but the exposed api is the same.
-exports.setImmediate = typeof setImmediate === "function" ? setImmediate : function(fn) {
-  var id = nextImmediateId++;
-  var args = arguments.length < 2 ? false : slice.call(arguments, 1);
-
-  immediateIds[id] = true;
-
-  nextTick(function onNextTick() {
-    if (immediateIds[id]) {
-      // fn.call() is faster so we optimize for the common use-case
-      // @see http://jsperf.com/call-apply-segu
-      if (args) {
-        fn.apply(null, args);
-      } else {
-        fn.call(null);
-      }
-      // Prevent ids from leaking
-      exports.clearImmediate(id);
-    }
-  });
-
-  return id;
-};
-
-exports.clearImmediate = typeof clearImmediate === "function" ? clearImmediate : function(id) {
-  delete immediateIds[id];
-};
-}).call(this)}).call(this,require("timers").setImmediate,require("timers").clearImmediate)
-},{"process/browser.js":21,"timers":22}]},{},[9]);
+},{}]},{},[12]);

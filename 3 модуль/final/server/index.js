@@ -22,7 +22,7 @@ app.post("/upload", [vjmServer.jwtProtector, upload.single("picture")], function
         user: request.user.username,
         image: request.file.filename,
         date: new Date(),
-        descr: request.descr
+        descript: request.descr
     });
     response.sendStatus(200);
 })
