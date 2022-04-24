@@ -8,7 +8,9 @@ let App = require("../components/app.vue"),
     Register = require("../components/reg.vue"),
     Index = require("../components/index.vue"),
     Feed = require("../components/feed.vue"),
-    Upload = require("../components/upload.vue")
+    Upload = require("../components/upload.vue"),
+    Profile = require("../components/profile.vue");
+    //UserPost = require("../components/post.vue")
 
 
 Vue.use(VueResource);
@@ -21,7 +23,9 @@ let router = new VueRouter({
     { path: '/register', component: Register },
     { path: '/', component: Index },
     { path: '/feed', component: Feed },
-    { path: '/upload', component: Upload }
+    { path: '/upload', component: Upload },
+    { path: '/profile/:index', component: Profile },
+    //{ path: '/feed/post/:index', component: UserPost}
   ]
 })
 
