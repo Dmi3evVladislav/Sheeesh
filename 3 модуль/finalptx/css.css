@@ -1,4 +1,5 @@
 body {
+<<<<<<< HEAD
     background: radial-gradient(rgb(238, 69, 79), rgb(96, 39, 299));
 }
 .step {
@@ -34,3 +35,49 @@ body {
 #rt.active {
     opacity: 1;
 }
+=======
+    background: url("https://sun9-55.userapi.com/f_eImaMVL-zVNeB_TZTG9ZJJDko11lqmfImRRA/8mYfedn5flQ.jpg");
+}
+
+#kickflip {
+    font-size: 50px;
+    color: chartreuse;
+}
+
+#govno {
+    font-size: 50px;
+    font-weight: bold;
+    color: rgb(184, 51, 51);
+    box-shadow: -5px 0px 25px 22px #0eefd1;
+    background-color: rgba(58, 247, 1, 0.5);
+}
+
+#mocha {
+    font-size: 80px;
+    font-weight: bolder;
+    color: crimson;
+    box-shadow: -5px 0px 25px 22px #EF0ED9;
+    background-color: rgba(247, 1, 193, 0.5);
+}
+
+#zalupa {
+    font-size: 50px;
+    font-weight: bolder;
+    color: rgb(10, 236, 252);
+    box-shadow: -5px 0px 25px 22px #ffee00;
+    background-color: rgba(247, 1, 1, 0.5);
+}
+
+#bigad {
+    box-shadow: -5px 0px 25px 22px #2bff00;
+    background-color: rgba(247, 1, 235, 0.5);
+}
+
+#bigad2 {
+    font-size: 50px;
+    font-weight: bolder;
+    color: rgb(10, 236, 252);
+    box-shadow: -5px 0px 25px 22px #ffee00;
+    background-color: rgba(247, 1, 1, 0.5);
+}
+>>>>>>> 5b2d938 (MOCHAGOVNO)
