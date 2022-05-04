@@ -1,0 +1,22 @@
+body {
+    background: linear-gradient(rgb(243, 2, 2), rgb(243, 98, 2), rgb(255, 218, 7), rgb(0, 255, 0), rgb(19, 3, 238), rgb(156, 2, 161));
+}
+
+.step {
+    width: 900px;
+    padding: 40px;
+
+    font-size: 50px;
+    line-height: 1.5;
+
+    opacity: 0.3;
+    transition: opacity 1s;
+}
+
+.step.active {
+    opacity: 1;
+}
+
+#step-2.active img {
+    transform: scale(2);
+}
