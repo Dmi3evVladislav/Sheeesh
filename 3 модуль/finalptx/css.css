@@ -1,7 +1,4 @@
-body {
-<<<<<<< HEAD
-    background: radial-gradient(rgb(238, 69, 79), rgb(96, 39, 299));
-}
+
 .step {
     background-color: blue;
     color: blueviolet;
@@ -35,7 +32,7 @@ body {
 #rt.active {
     opacity: 1;
 }
-=======
+body {
     background: url("https://sun9-55.userapi.com/f_eImaMVL-zVNeB_TZTG9ZJJDko11lqmfImRRA/8mYfedn5flQ.jpg");
 }
 
