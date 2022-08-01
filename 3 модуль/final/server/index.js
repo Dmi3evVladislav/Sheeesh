@@ -60,7 +60,6 @@ app.post("/auth/register", function(request, response){
 })
 
 app.get('/feed/:postnum', vjmServer.jwtProtector, function(request, response) {
-    let test = 3
     let limitnum = 10 + Number(request.params.postnum)
     database.db("photofeed").collection('uploads').find().sort({date: -1}).limit(limitnum).toArray(function(err, documents) {
         response.json(documents)
